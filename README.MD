@@ -1,8 +1,44 @@
 # Factory Skyline
 
-Factory Skyline is a currently un-working mod first created by [Cepheidqq](https://github.com/cepheidqq). The mod currently is not supported currently by update 4 to Satisfactory.
+[Factory Skyline](https://ficsit.app/mod/7bDghQkAYz8d3c) is a currently un-working mod first created by [Cepheidqq](https://github.com/cepheidqq). The mod currently is not supported currently by update 4 to Satisfactory.
 
 The mod allowed for a quick and easy method to copy and paste large setups with ease along with a blueprint save option. 
+
+Last blurb by the original author.
+```
+Usage:
+
+Press 'R' in game to call the menu
+Right Click on the design file to rename it
+Main Function:
+
+Factory Skyline is designed for building extreme huge factorys
+Blueprint editing: Add, Remove, Clear, Dismantle...
+Selecting operation based on area and connection
+Asynchronous Copy/Paste and auto Repeat based on custom displacement.
+All basic buildings are supported
+Assistant Tookit for Creative Mode:
+
+Fly mode with Sprint
+Invincible Player
+Infinite Ammo
+Fog Removal
+Todo:
+
+Design file Operation: Save, Move, Multi-Select...
+Change settings/color for batch of factories
+Railroad Switch Support
+Stability Optimization
+Know issus
+
+Multiplayer unsupported
+Can not Cut and Connect Pipelines when build Pump/Junction Cross on them
+How to Change Key Map
+
+First: You need to open the command system of SML (/config/SML.cfg, "enableSMLCommands": true)
+Second: Type /Skyline command in the chat box to change the key setting
+Note That: The Key-Mapping Hint of the Build Gun will not change after rebinding
+```
 
 ## Current status
 
@@ -34,7 +70,7 @@ I plan to keep this mod fully open-sourced community-driven, it's too awesome to
 
 
 ## Contributing
-Join the discord server [Here](https://discord.gg/vuFK7tsrE3) or join in the discussion here on the x forums or here on Reddit.
+Join the discord server [Here](https://discord.gg/vuFK7tsrE3) or join in the discussion [Here](https://forums.ficsit.app/t/factory-skyline-needs-your-help/1342) on the FICSIT.app forums or [Here](https://www.reddit.com/r/SatisfactoryGame/comments/o5ldh7/factory_skyline_needs_your_help/) on Reddit.
 
 Pull requests welcome.
 

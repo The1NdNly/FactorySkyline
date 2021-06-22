@@ -1,0 +1,67 @@
+0.1.3
+	Bug Fix:
+	Fixed a bug which caused a crash with unknown recipe
+0.1.2	
+	Add support to CL#138299
+0.1.1
+	Bug Fix:
+	Fixed a bug which could reset keybinds when select and build
+	Feature Change:
+	Will not count points while recycling materials from the sink
+0.1.0
+	Change Log：
+	Feature Add:
+	Consume costs when build factorys
+	Add a Skyline Inventory for receiving refund when dismantle buildings
+	Recycle materials from AWESOME Sink to Skyline Inventory
+	Take out materials from Skyline Inventory to Player's Inventory
+	Feature Change:
+	Remove the third person view option
+0.0.9
+	Branch Match:
+	Satisfactory Experimental v0.3.6.6 Build 136629 or Later - Factory Skyline Alpha 0.0.8 or Later
+	Satisfactory Early Access v0.3.6.5 Build 136408 - Factory Skyline Alpha 0.0.7
+	Feature Add:
+	Add a Configurable Input System
+	Add a Hot Key for deleting design folder (Be Careful!)
+	Toggle Flying off will also stop the flying
+0.0.8
+	Change Log：
+	Branch Match: Satisfactory Experimental v0.3.6.6 Build 136629 - Factory Skyline Alpha 0.0.8 Satisfactory Early Access v0.3.6.5 Build 136408 - Factory Skyline Alpha 0.0.7
+	Feature Add:
+	Add support to Experimental v0.3.6.6 Build 136629
+0.0.7
+	Change Log：
+	Bug Fix:
+	Fixed a bug which caused a crash when highlight building with construction/dismantle animation
+	Fixed a bug which caused a crash when pre
+	Fixed a bug which caused a deadlock when select power connections
+	Fixed a bug where the conveyor belt/lift and Pipelines didn't work immediately after construction
+	Fixed a bug where the settings of the train platform cargo didn't be copied after construction
+	Fixed a bug of an incorrect coordinate while area selecting in window mode
+0.0.6
+	Change Log：
+	Bug Fix:
+	Fixed a bug which may causes a crash when preview Conveyor Pole or Pipeline Supports
+0.0.5
+	Bug Fix:
+	Fixed a bug which may cause a crash after the death
+	Balance:
+	Allow build Water Extractors if there exist water at the location
+0.0.4
+	Change Log：
+	Warning:
+	This version of the Factory Skyline can only used in the Early Access - v0.3.6 - Build 134641 or Later version of Satisfactory
+	It means that you have to download and use the experimental build if you want to install this mod before the early access version updates
+	Feature Add:
+	Allow Saving Design File Now
+	Add Command For Changing Menu Key
+	Add Packager Support
+	Add Adaptive Jump Pad Support
+	Add Mk.2 Pipeline Support
+	Add Mk.2 Pipeline Pump Support
+	Add Valve Support
+	Add Ladder Support
+	Bug Fix:
+	Fixed a hologram display bug of the pipeline support which has a rotation angle
+	Fixed a display bug of the building status UI page when switch the design file
