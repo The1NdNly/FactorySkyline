@@ -1,0 +1,26 @@
+#include "FGBuildableLadder.h"
+AFGBuildableLadder::AFGBuildableLadder() {}
+void AFGBuildableLadder::BeginPlay()
+{
+}
+
+void AFGBuildableLadder::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+}
+
+int32 AFGBuildableLadder::GetDismantleRefundReturnsMultiplier() const
+{
+	return int32();
+}
+
+void AFGBuildableLadder::SetNumSegments(int32 Num, bool ForceUpdate)
+{
+}
+
+void AFGBuildableLadder::PostLoadGame_Implementation(int32 saveVersion, int32 gameVersion)
+{
+}
+
+void AFGBuildableLadder::OnRep_NumSegments()
+{
+}

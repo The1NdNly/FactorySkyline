@@ -1,0 +1,15 @@
+#include "FGJumpPadHologram.h"
+
+AFGJumpPadHologram::AFGJumpPadHologram() {}
+
+void AFGJumpPadHologram::EndPlay(const EEndPlayReason::Type endPlayReason)
+{
+}
+
+void AFGJumpPadHologram::Tick(float dt)
+{
+}
+
+void AFGJumpPadHologram::DisplayNearbyJumpPadTrajectories()
+{
+}
