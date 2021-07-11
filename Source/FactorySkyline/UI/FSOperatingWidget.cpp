@@ -1,13 +1,13 @@
 // ILikeBanas
 
 
-#include "UI/FSOperatingWidget.h"
+#include "FactorySkyline/UI/FSOperatingWidget.h"
 #include "Components/CanvasPanel.h"
 #include "Components/CanvasPanelSlot.h"
 #include "Components/VerticalBox.h"
 #include "Components/Button.h"
-#include "FSDesign.h"
-#include "FSkyline.h"
+#include "FactorySkyline/FSDesign.h"
+#include "FactorySkyline/FSkyline.h"
 
 
 UFSOperatingWidget::UFSOperatingWidget(const FObjectInitializer& ObjectInitializer)
@@ -55,27 +55,27 @@ void UFSOperatingWidget::Init()
 	this->InStyle = InStyle;
 	this->InStyleClick = InStyleClick;
 
-	TSubclassOf<UUserWidget> WidgetClass = LoadClass<UUserWidget>(this, TEXT("/Game/FactorySkyline/Widget_SelectPanel.Widget_SelectPanel_C"));
+	TSubclassOf<UUserWidget> WidgetClass = LoadClass<UUserWidget>(this, TEXT("/FactorySkyline/Widget_SelectPanel.Widget_SelectPanel_C"));
 	SelectPanel = CreateWidget<UFSSelectPanel>(this, WidgetClass);
 	SelectPanel->Init();
 	Box2->AddChild(SelectPanel);
 
-	WidgetClass = LoadClass<UUserWidget>(this, TEXT("/Game/FactorySkyline/Widget_DeletePanel.Widget_DeletePanel_C"));
+	WidgetClass = LoadClass<UUserWidget>(this, TEXT("/FactorySkyline/Widget_DeletePanel.Widget_DeletePanel_C"));
 	DeletePanel = CreateWidget<UFSDeletePanel>(this, WidgetClass);
 	DeletePanel->Init();
 	Box2->AddChild(DeletePanel);
 
-	WidgetClass = LoadClass<UUserWidget>(this, TEXT("/Game/FactorySkyline/Widget_CopyPanel.Widget_CopyPanel_C"));
+	WidgetClass = LoadClass<UUserWidget>(this, TEXT("/FactorySkyline/Widget_CopyPanel.Widget_CopyPanel_C"));
 	CopyPanel = CreateWidget<UFSCopyPanel>(this, WidgetClass);
 	CopyPanel->Init();
 	Box3->AddChild(CopyPanel);
 
-	WidgetClass = LoadClass<UUserWidget>(this, TEXT("/Game/FactorySkyline/Widget_AdvancedCopyPanel.Widget_AdvancedCopyPanel_C"));
+	WidgetClass = LoadClass<UUserWidget>(this, TEXT("/FactorySkyline/Widget_AdvancedCopyPanel.Widget_AdvancedCopyPanel_C"));
 	AdvancedCopyPanel = CreateWidget<UFSAdvancedCopyPanel>(this, WidgetClass);
 	AdvancedCopyPanel->Init();
 	Box3->AddChild(AdvancedCopyPanel);
 
-	WidgetClass = LoadClass<UUserWidget>(this, TEXT("/Game/FactorySkyline/Widget_StatusPanel.Widget_StatusPanel_C"));
+	WidgetClass = LoadClass<UUserWidget>(this, TEXT("/FactorySkyline/Widget_StatusPanel.Widget_StatusPanel_C"));
 	StatusPanel = CreateWidget<UFSStatusPanel>(this, WidgetClass);
 	StatusPanel->Init();
 	Box1->AddChild(StatusPanel);

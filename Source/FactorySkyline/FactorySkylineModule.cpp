@@ -1,8 +1,6 @@
 #include "FactorySkylineModule.h"
 #include "FSkyline.h"
-#include "mod/hooking.h"
-#include "util/Logging.h"
-#include "FSSubsystemHolder.h"
+#include "FSGameWorldModule.h"
 #include "FSCommandInstance.h"
 #include "command/ChatCommandLibrary.h"
 #include "FGGameInstance.h"
@@ -11,30 +9,37 @@
 #include "Buildables/FGBuildable.h"
 #include "Buildables/FGBuildableConveyorBelt.h"
 #include "Buildables/FGBuildableResourceSink.h"
+#include "Patching/NativeHookManager.h"
 
-bool CheckVersion(const FString& Version)
+bool CheckVersion(int Ver)
 {
-	FString Header;
-	FString BuildVersion;
-	Version.Split(TEXT("-"), &Header, &BuildVersion, ESearchCase::CaseSensitive, ESearchDir::FromEnd);
-	int Ver = FCString::Atoi(*BuildVersion);
-	//SML::Logging::info(Ver);
 	return Ver >= 136408;
 }
 
 void FFactorySkylineModule::StartupModule() {
+	int version = FEngineVersion::Current().GetChangelist();
+	if (!CheckVersion(version))
+	{
+		UE_LOG(LogSkyline, Log, TEXT("Skyline Version missmatch..."));
+		return;
+	}
+
+	UE_LOG(LogSkyline, Log, TEXT("Loading Mod: Factory Skyline..."));
+	UFGGameInstance* GameManager = GetMutableDefault<UFGGameInstance>();
+	//FSSubsystem->SpawnSubsystem(FSSubsystem, AFSkyline::StaticClass(), TEXT("FSSubsystem"));
 	
-	if (!CheckVersion(UFGNetworkLibrary::GetLocalBuildVersion())) return;
-
-	SML::Logging::info(TEXT("Loading Mod: Factory Skyline..."));
-	FSubsystemInfoHolder::RegisterSubsystemHolder(UFSSubsystemHolder::StaticClass());
-
-	SUBSCRIBE_METHOD_AFTER(UFGGameInstance::LoadComplete, [](UFGGameInstance* FGGameInstance, const float loadTime, const FString& mapName) {
+	SUBSCRIBE_METHOD_VIRTUAL_AFTER(UFGGameInstance::LoadComplete, GameManager, [](UFGGameInstance* FGGameInstance, const float loadTime, const FString& mapName) {
 		AFSkyline* Skyline = AFSkyline::Get(FGGameInstance);
+		Log("Starting Mod: Factory Skyline...");
 		if (Skyline) {
+			Log("Skyline instance ok");
 			Skyline->InitFullSetup();
 			AChatCommandSubsystem* Chat = AChatCommandSubsystem::Get(FGGameInstance);
-			if (Chat) Chat->RegisterCommand(AFSCommandInstance::StaticClass());
+			if (Chat){
+				Chat->RegisterCommand(TEXT("FactorySkyline"), AFSCommandInstance::StaticClass());
+			}
+		}else{
+			Log("Skyline instance missing");
 		}
 	});
 	/*
@@ -44,8 +49,9 @@ void FFactorySkylineModule::StartupModule() {
 			Skyline->FSCtrl->onPreFactoryTick();
 		}
 	});*/
+	AFGBuildableResourceSink* BuildableSinkManager = GetMutableDefault<AFGBuildableResourceSink>();
 	
-	SUBSCRIBE_METHOD(AFGBuildableResourceSink::Factory_CollectInput_Implementation, [](CallScope <void(*)(AFGBuildableResourceSink*)>& Fun, AFGBuildableResourceSink* ResourceSink) {
+	SUBSCRIBE_METHOD_VIRTUAL(AFGBuildableResourceSink::Factory_CollectInput_Implementation, BuildableSinkManager, [](CallScope <void(*)(AFGBuildableResourceSink*)>& Fun, AFGBuildableResourceSink* ResourceSink) {
 		AFSkyline* Skyline = AFSkyline::Get(ResourceSink);
 		if (Skyline && Skyline->FSCtrl) {
 			Skyline->FSCtrl->onPreResourceSinkTick(ResourceSink);

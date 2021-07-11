@@ -25,8 +25,8 @@ void UFSTrainPlatformOperator::ApplyConnection(AFGBuildable* Buildable, UFGConne
 	if (SourceComponent->mRailroadTrackConnection) {
 		UFGRailroadTrackConnectionComponent* Component = this->ConnectionMapping<UFGRailroadTrackConnectionComponent>(SourceComponent->mRailroadTrackConnection);
 		if (Component) TargetComponent->SetRailroadConnectionReference(Component);
-		SML::Logging::info(*SourceComponent->mRailroadTrackConnection->GetFullName());
-		SML::Logging::info(*TargetComponent->mRailroadTrackConnection->GetFullName());
+		UE_LOG(LogTemp, Verbose, TEXT("%s"), *SourceComponent->mRailroadTrackConnection->GetFullName());
+		UE_LOG(LogTemp, Verbose, TEXT("%s"), *TargetComponent->mRailroadTrackConnection->GetFullName());
 	}
 	if (SourceComponent->mConnectedTo) TargetComponent->mConnectedTo = this->ConnectionMapping<UFGTrainPlatformConnection>(SourceComponent->mConnectedTo);
 

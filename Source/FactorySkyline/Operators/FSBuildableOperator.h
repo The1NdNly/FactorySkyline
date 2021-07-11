@@ -17,8 +17,7 @@
 #include "Equipment/FGBuildGun.h"
 #include "FGCharacterPlayer.h"
 #include "FGBuildableSubsystem.h"
-#include "util/Logging.h"
-#include "FSBuildableService.h"
+#include "FactorySkyline/FSBuildableService.h"
 #include "FGBuildablePipelineSupport.h"
 #include "FSBuildableOperator.generated.h"
 

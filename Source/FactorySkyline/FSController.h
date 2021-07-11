@@ -93,7 +93,7 @@ public:
 	virtual bool ShouldSave_Implementation() const override { return Etc ? !Etc->GetBool("DontSaveAnything") : false; }
 
 	void Init();
-	void LoadDesign(UFSDesign* Design);
+	void LoadDesign(UFSDesign* DesignParam);
 	void UnloadDesign(bool ShowMouse);
 	
 	void onCallMenu();

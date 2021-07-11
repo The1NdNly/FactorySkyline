@@ -5,7 +5,7 @@
 #include "Buildables/FGBuildablePipeline.h"
 #include "Buildables/FGBuildablePipeHyper.h"
 #include "Hologram/FGPipelineHologram.h"
-#include "FGInstancedSplineMesh.h"
+//#include "FGInstancedSplineMesh.h"
 #include "FGInstancedSplineMeshComponent.h"
 #include "FGPipeConnectionComponent.h"
 
@@ -86,7 +86,8 @@ AFGBuildable* UFSPipelineOperator::CreateCopy(const FSTransformOperator& Transfo
 	if (!Recipe) return nullptr;
 
 	Buildable->SetBuiltWithRecipe(Recipe);
-	Buildable->SetBuildingID(Source->GetBuildingID());
+	//TODO:
+	//Buildable->SetBuildingID(Source->GetBuildingID());
 
 	TargetPipeline->mSplineData.Empty();
 	for (const FSplinePointData& PointData : SourcePipeline->mSplineData) {

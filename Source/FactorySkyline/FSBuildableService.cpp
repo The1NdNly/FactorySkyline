@@ -215,10 +215,10 @@ void KDTree2D::BuildTree(const TSet<TWeakObjectPtr<AFGBuildable>>& BuildableSet,
 	BuildTree(0, 0, Data.Num(), Box);
 }
 
-void KDTree2D::QueryDelta(TArray<TWeakObjectPtr<AFGBuildable> >& Positive, TArray<TWeakObjectPtr<AFGBuildable> >& Nagetive, const Int2D& StartOld, const Int2D& EndOld, const Int2D& StartNew, const Int2D& EndNew)
+void KDTree2D::QueryDelta(TArray<TWeakObjectPtr<AFGBuildable> >& PositiveParam, TArray<TWeakObjectPtr<AFGBuildable> >& NagetiveParam, const Int2D& StartOld, const Int2D& EndOld, const Int2D& StartNew, const Int2D& EndNew)
 {
-	this->Positive = &Positive;
-	this->Nagetive = &Nagetive;
+	this->Positive = &PositiveParam;
+	this->Nagetive = &NagetiveParam;
 
 	Int2D Box[6];
 	Box[0].Pos[0] = Box[0].Pos[1] = 0;

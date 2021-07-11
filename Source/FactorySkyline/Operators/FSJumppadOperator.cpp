@@ -38,7 +38,8 @@ AFGBuildable* UFSJumppadOperator::CreateCopy(const FSTransformOperator& Transfor
 	if (!Recipe) return nullptr;
 
 	Buildable->SetBuiltWithRecipe(Recipe);
-	Buildable->SetBuildingID(Source->GetBuildingID());
+	//TODO:
+	//Buildable->SetBuildingID(Source->GetBuildingID());
 	TargetJumppad->SetLaunchAngle(SourceJumppad->mLaunchAngle);
 	//SML::Logging::info(SourceJumppad->mLaunchAngle);
 

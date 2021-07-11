@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "FSMenuItem.h"
+#include "FactorySkyline/FSMenuItem.h"
 #include "Components/CanvasPanel.h"
 #include "Components/CanvasPanelSlot.h"
 #include "Blueprint/UserWidget.h"

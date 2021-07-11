@@ -3,9 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
+#include "FSBuildingOperator.h"
 #include "UObject/NoExportTypes.h"
 #include "Buildables/FGBuildable.h"
-#include "Operators/FSBuildableOperator.h"
+#include "FactorySkyline/Operators/FSBuildableOperator.h"
 #include "FSFoundationOperator.generated.h"
 
 /**

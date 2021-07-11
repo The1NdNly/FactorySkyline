@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "FSBuildableService.h"
-#include "FSDesign.h"
+#include "FactorySkyline/FSBuildableService.h"
+#include "FactorySkyline/FSDesign.h"
 #include "Operators/FSBuildableOperator.h"
 #include "Equipment/FGBuildGun.h"
 #include "FGBuildableSubsystem.h"

@@ -17,14 +17,20 @@
 #include "FGHUD.h"
 #include "FSController.h"
 #include "Operators/FSBuildableOperator.h"
-#include "util/Logging.h"
+#include "Subsystem/ModSubsystem.h"
+
 #include "FSkyline.generated.h"
+
+DECLARE_LOG_CATEGORY_EXTERN(LogSkyline, Log, All);
+
+
+#define Log(msg, ...) UE_LOG(LogSkyline, Log, TEXT(msg), __VA_ARGS__)
 
 /**
  * 
  */
 UCLASS()
-class FACTORYSKYLINE_API AFSkyline : public AFGSubsystem, public IFGSaveInterface
+class FACTORYSKYLINE_API AFSkyline : public AModSubsystem, public IFGSaveInterface
 {
 	GENERATED_BODY()
 public:
@@ -77,7 +83,34 @@ public:
 	UPROPERTY()
 	UFSAdaptiveUtil* AdaptiveUtil = nullptr;
 
+	
+	/** Helper to spawn subsystems. */
+	template< class C >
+    void SpawnSubsystem( C*& out_spawnedSubsystem, TSubclassOf< AFGSubsystem > spawnClass, FName spawnName )
+	{
+		if( out_spawnedSubsystem )
+		{
+			UE_LOG( LogSkyline, Error, TEXT( "AFGWorldSettings::SpawnSubsystem failed for '%s', already spawned or loaded." ), *spawnName.ToString() );
+			return;
+		}
+
+		if( !spawnClass )
+		{
+			UE_LOG( LogSkyline, Error, TEXT( "AFGWorldSettings::SpawnSubsystem failed for '%s', no class given." ), *spawnName.ToString() );
+			return;
+		}
+
+		FActorSpawnParameters spawnParams;
+		spawnParams.Owner = this;
+		spawnParams.Name = spawnName;
+
+		out_spawnedSubsystem = GetWorld()->SpawnActor< C >( spawnClass, spawnParams );
+		check( out_spawnedSubsystem );
+	}
 private:
 	template <class T>
 	T* SpawnHiddenActor();
+
+
+	
 };

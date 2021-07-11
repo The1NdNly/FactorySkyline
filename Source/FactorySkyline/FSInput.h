@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "util/Logging.h"
 #include "FGPlayerController.h"
 #include "FSBuildableService.h"
 #include "UI/FSKeySettingEntry.h"
@@ -108,7 +107,7 @@ struct FSActionKey
 class FScaner
 {
 public:
-	void Init(AFGPlayerController* FGController);
+	void Init(AFGPlayerController* FGControllerParam);
 	void Load(UFSKeySettingEntry* Entry);
 	void Unload(UFSKeySettingEntry* Entry);
 	void Tick();

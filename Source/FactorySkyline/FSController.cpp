@@ -16,7 +16,6 @@
 #include "Equipment/FGWeapon.h"
 #include "Framework/Application/SlateApplication.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
-#include "util/Logging.h"
 
 
 void AFSController::Init() {
@@ -51,6 +50,7 @@ void AFSController::Init() {
 		DesignRoot->SkylineUI = SkylineUI;
 	}
 
+	UE_LOG(LogSkyline, Verbose, TEXT("Initializing global Keybinds"));
 	FSInput->BindDelegate("MenuKey", FSInputEvent::FS_Pressed, this, &AFSController::onCallMenu);
 	FSInput->BindDelegate("EscapeKey", FSInputEvent::FS_Pressed, this, &AFSController::onEscPressed);
 	FSInput->BindDelegate("LeftControlKey", FSInputEvent::FS_Pressed, this, &AFSController::onLeftCtrlPressed);
@@ -127,12 +127,11 @@ void AFSController::onBuildGunStateChanged(EBuildGunState newState)
 		if (State == FSState::Select || State == FSState::SetAnchor || State == FSState::Copy || State == FSState::SetItem) {
 			if (newState == EBuildGunState::BGS_NONE) return;
 			if (newState == EBuildGunState::BGS_MENU) {
-				UFGBuildGunState* State = this->FGBuildGun->GetBuildGunStateFor(newState);
-				State->EndState();
+				UFGBuildGunState* StateVar = this->FGBuildGun->GetBuildGunStateFor(newState);
+				StateVar->EndState();
 				for (TObjectIterator<UInputComponent> It; It; ++It) {
-					UInputComponent* InputComponent = *It;
-					if (InputComponent->GetOuter() == this->FGBuildGun) {
-						this->FGController->PopInputComponent(InputComponent);
+					if ((*It)->GetOuter() == this->FGBuildGun) {
+						this->FGController->PopInputComponent(*It);
 					}
 				}
 			}
@@ -593,10 +592,10 @@ void AFSController::TickFly(float dt)
 	GetPlayer()->GetCharacterMovement()->Velocity = Velocity * Speed;
 }
 
-void AFSController::LoadDesign(UFSDesign* Design)
+void AFSController::LoadDesign(UFSDesign* DesignParam)
 {
-	if (this->Design && this->Design != Design) UnloadDesign(false);
-	this->Design = Design;
+	if (this->Design && this->Design != DesignParam) UnloadDesign(false);
+	this->Design = DesignParam;
 	Repeat.Ready = false;
 }
 
@@ -956,8 +955,8 @@ void AFSController::onPreResourceSinkTick(AFGBuildableResourceSink* Sink)
 	FInventoryItem out_item;
 	float out_OffsetBeyond;
 	if (Input && Input->Factory_GrabOutput(out_item, out_OffsetBeyond)) {
-		SML::Logging::info(*Sink->GetFullName());
-		SML::Logging::info(*out_item.ItemClass->GetFullName());
+		UE_LOG(LogSkyline, Verbose, TEXT("%s"), *Sink->GetFullName());
+		UE_LOG(LogSkyline, Verbose, TEXT("%s"), *out_item.ItemClass->GetFullName());
 		//ResourceSinkSubsystem->AddPoints_ThreadSafe(out_item.ItemClass);
 		Inventory.AddResource(out_item.ItemClass, 1);
 	}

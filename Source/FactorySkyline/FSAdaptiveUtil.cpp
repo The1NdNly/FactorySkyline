@@ -3,7 +3,6 @@
 
 #include "FSAdaptiveUtil.h"
 #include "FGNetworkLibrary.h"
-#include "util/Logging.h"
 
 void UFSAdaptiveUtil::Init()
 {
@@ -12,14 +11,15 @@ void UFSAdaptiveUtil::Init()
 
 int UFSAdaptiveUtil::GetGameVersion()
 {
-	FString Header;
+	/*FString Header;
 	FString BuildVersion;
 	FString Version = UFGNetworkLibrary::GetLocalBuildVersion();
 
 	Version.Split(TEXT("-"), &Header, &BuildVersion, ESearchCase::CaseSensitive, ESearchDir::FromEnd);
 	int Ver = FCString::Atoi(*BuildVersion);
-
-	return Ver;
+	*/
+	;
+	return FEngineVersion::Current().GetChangelist();
 }
 
 UFGFactoryConnectionComponent* UFSAdaptiveUtil::GetConveyorConnection(AFGBuildableConveyorBase* Conveyor, int index)

@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Operators/FSBuildableOperator.h"
+#include "FactorySkyline/Operators/FSBuildableOperator.h"
 #include "FSRailroadSwitchOperator.generated.h"
 
 /**

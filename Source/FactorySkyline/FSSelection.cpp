@@ -8,7 +8,8 @@
 #include "Buildables/FGBuildableFoundation.h"
 #include "FSBuildableService.h"
 #include "FGFactorySettings.h"
-#include "util/Logging.h"
+#include "FGProductionIndicatorInstanceComponent.h"
+#include "Components/ProxyInstancedStaticMeshComponent.h"
 
 
 void UFSSelection::Init()
@@ -25,7 +26,7 @@ void UFSSelection::Init()
 
 	//Hologram = Cast<UMaterialInstanceConstant>(StaticLoadObject(UMaterialInstanceConstant::StaticClass(), this, TEXT("/Game/FactoryGame/Resource/Parts/AluminumPlate/Material/MI_AluminiumSheet_01.MI_AluminiumSheet_01")));
 	
-	Scanline = Cast<UTexture2D>(StaticLoadObject(UTexture2D::StaticClass(), this, TEXT("/Game/FactorySkyline/Icon/White.White")));
+	Scanline = Cast<UTexture2D>(StaticLoadObject(UTexture2D::StaticClass(), this, TEXT("/FactorySkyline/Icon/White.White")));
 
 	//SelectMaterial = UMaterialInstanceDynamic::Create(Hologram, this);
 	//SelectMaterial = UMaterialInstanceDynamic::Create(UFGFactorySettings::Get()->mDefaultValidPlacementMaterial, this);
@@ -353,7 +354,7 @@ void UFSSelection::EnableHightLight(FSActorMaterial& Cache, AFGBuildable* Builda
 				if (MeshProxy) {
 					FSMaterialHandle** LocalCache = MaterialMapping.Find(MeshProxy);
 					if (LocalCache) RemoveInstance(MeshProxy, *LocalCache);
-					else RemoveInstance(MeshProxy, MeshProxy->mInstanceHandle.colorIndex);
+					else RemoveInstance(MeshProxy, MeshProxy->mInstanceHandle.ColorIndex);
 					AddInstance(MeshProxy, Material);
 				}
 				else {
@@ -448,8 +449,8 @@ void UFSSelection::DisableHightLight(AFGBuildable* Buildable)
 				RemoveInstance(MeshProxy, *LocalCache);
 				if (MeshComponent && Cache->Buildable.Get()) {
 					//SML::Logging::info(MeshProxy->mInstanceHandle.colorIndex);
-					if (MeshProxy->mInstanceHandle.colorIndex < BUILDABLE_COLORS_MAX_SLOTS)
-						MeshProxy->mInstanceManager->AddInstance(MeshProxy->GetComponentTransform(), MeshProxy->mInstanceHandle, MeshProxy->mInstanceHandle.colorIndex);
+					if (MeshProxy->mInstanceHandle.ColorIndex < BUILDABLE_COLORS_MAX_SLOTS)
+						MeshProxy->mInstanceManager->AddInstance(MeshProxy->GetComponentTransform(), MeshProxy->mInstanceHandle, MeshProxy->mInstanceHandle.ColorIndex);
 					else
 						MeshProxy->mInstanceManager->AddInstance(MeshProxy->GetComponentTransform(), MeshProxy->mInstanceHandle, 0);
 				}
@@ -476,8 +477,8 @@ void UFSSelection::DisableAll()
 				if (LocalCache) {
 					RemoveInstance(MeshProxy, *LocalCache);
 					if (MeshComponent && Pair.Value.Buildable.Get()) {
-						if (MeshProxy->mInstanceHandle.colorIndex < BUILDABLE_COLORS_MAX_SLOTS)
-							MeshProxy->mInstanceManager->AddInstance(MeshProxy->GetComponentTransform(), MeshProxy->mInstanceHandle, MeshProxy->mInstanceHandle.colorIndex);
+						if (MeshProxy->mInstanceHandle.ColorIndex < BUILDABLE_COLORS_MAX_SLOTS)
+							MeshProxy->mInstanceManager->AddInstance(MeshProxy->GetComponentTransform(), MeshProxy->mInstanceHandle, MeshProxy->mInstanceHandle.ColorIndex);
 						else
 							MeshProxy->mInstanceManager->AddInstance(MeshProxy->GetComponentTransform(), MeshProxy->mInstanceHandle, 0);
 					}
@@ -541,18 +542,19 @@ void UFSSelection::AddInstance(UFGColoredInstanceMeshProxy* MeshProxy, uint8 Slo
 	UHierarchicalInstancedStaticMeshComponent* HISMComponent = MeshProxy->mInstanceManager->mInstanceComponents[Slot];
 	HISMComponent->AddInstance(MeshProxy->GetComponentTransform());
 	TArray <UFGColoredInstanceManager::InstanceHandle*>& NewHandlesArray = MeshProxy->mInstanceManager->mHandles[Slot];
-	MeshProxy->mInstanceHandle.handleID = NewHandlesArray.Add(&MeshProxy->mInstanceHandle);
+	MeshProxy->mInstanceHandle.HandleID = NewHandlesArray.Add(&MeshProxy->mInstanceHandle);
 }
 
 void UFSSelection::RemoveInstance(UFGColoredInstanceMeshProxy* MeshProxy, uint8 Slot)
 {
 	UHierarchicalInstancedStaticMeshComponent* HISMComponent = MeshProxy->mInstanceManager->mInstanceComponents[Slot];
-	int Index = MeshProxy->mInstanceHandle.handleID;
+	int Index = MeshProxy->mInstanceHandle.HandleID;
 	if (Index < 0) return;
 
-	MeshProxy->mInstanceHandle.handleID = INDEX_NONE;
+	MeshProxy->mInstanceHandle.HandleID = INDEX_NONE;
 	HISMComponent->RemoveInstance(Index);
 	TArray <UFGColoredInstanceManager::InstanceHandle*>& HandlesArray = MeshProxy->mInstanceManager->mHandles[Slot];
 	HandlesArray.RemoveAtSwap(Index);
-	if (Index >= 0 && Index < HandlesArray.Num()) HandlesArray[Index]->handleID = Index;
+	if (Index >= 0 && Index < HandlesArray.Num()) HandlesArray[Index]->HandleID = Index;
 }
+

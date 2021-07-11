@@ -1,9 +1,9 @@
 // ILikeBanas
 
 
-#include "UI/FSMenuWidget.h"
-#include "UI/FSkylineUI.h"
-#include "FSMenuItem.h"
+#include "FactorySkyline/UI/FSMenuWidget.h"
+#include "FactorySkyline/UI/FSkylineUI.h"
+#include "FactorySkyline/FSMenuItem.h"
 #include "Components/CanvasPanel.h"
 #include "Components/CanvasPanelSlot.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"

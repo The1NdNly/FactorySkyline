@@ -2,8 +2,8 @@
 
 
 #include "FSStatusEntry.h"
-#include "FSkyline.h"
-#include "Operators/FSBuildableOperator.h"
+#include "FactorySkyline/FSkyline.h"
+#include "FactorySkyline/Operators/FSBuildableOperator.h"
 #include "Resources/FGBuildingDescriptor.h"
 #include "Buildables/FGBuildable.h"
 #include "Buildables/FGBuildableFactory.h"

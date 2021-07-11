@@ -6,7 +6,6 @@
 #include "Buildables/FGBuildableManufacturer.h"
 #include "Hologram/FGFactoryHologram.h"
 #include "FGFactoryLegsComponent.h"
-#include "util/Logging.h"
 
 /*
 AFGBuildable* UFSManufacturerOperator::CreateCopy(const FSTransformOperator& TransformOperator)

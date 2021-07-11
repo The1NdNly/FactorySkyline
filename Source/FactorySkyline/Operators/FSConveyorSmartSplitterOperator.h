@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Operators/FSConveyorAttachmentOperator.h"
+#include "FactorySkyline/Operators/FSConveyorAttachmentOperator.h"
 #include "FSConveyorSmartSplitterOperator.generated.h"
 
 /**

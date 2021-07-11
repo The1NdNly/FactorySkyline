@@ -38,7 +38,8 @@ AFGBuildable* UFSLadderOperator::CreateCopy(const FSTransformOperator& Transform
 	if (!Recipe) return nullptr;
 
 	Buildable->SetBuiltWithRecipe(Recipe);
-	Buildable->SetBuildingID(Source->GetBuildingID());
+	//TODO:
+	//Buildable->SetBuildingID(Source->GetBuildingID());
 	TargetLadder->SetNumSegments(SourceLadder->mNumSegments);
 
 	Buildable->SetColorSlot_Implementation(Source->GetColorSlot_Implementation());

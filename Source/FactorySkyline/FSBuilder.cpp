@@ -1,16 +1,16 @@
 // ILikeBanas
 
 
-#include "FSBuilder.h"
-#include "FSSelection.h"
-#include "FSkyline.h"
-#include "FSDesign.h"
-#include "FSMenuItem.h"
-#include "FSController.h"
-#include "UI/FSkylineUI.h"
-#include "UI/FSResourceIcon.h"
-#include "Operators/FSBuildableOperator.h"
-#include "Operators/FSConveyorLiftOperator.h"
+#include "FactorySkyline/FSBuilder.h"
+#include "FactorySkyline/FSSelection.h"
+#include "FactorySkyline/FSkyline.h"
+#include "FactorySkyline/FSDesign.h"
+#include "FactorySkyline/FSMenuItem.h"
+#include "FactorySkyline/FSController.h"
+#include "FactorySkyline/UI/FSkylineUI.h"
+#include "FactorySkyline/UI/FSResourceIcon.h"
+#include "FactorySkyline/Operators/FSBuildableOperator.h"
+#include "FactorySkyline/Operators/FSConveyorLiftOperator.h"
 #include "Equipment/FGBuildGun.h"
 #include "FGBuildableSubsystem.h"
 #include "FGFluidIntegrantInterface.h"
@@ -32,7 +32,6 @@
 #include "Hologram/FGBuildableHologram.h"
 #include "Hologram/FGFactoryHologram.h"
 #include "Hologram/FGFoundationHologram.h"
-#include "util/Logging.h"
 
 void AFSBuilder::Init()
 {
@@ -56,67 +55,67 @@ void AFSBuilder::Init()
 	this->Inventory = &FSkyline->FSCtrl->Inventory;
 }
 
-bool AFSBuilder::CheckAnchor(UFSDesign* Design)
+bool AFSBuilder::CheckAnchor(UFSDesign* DesignParam)
 {
 	AnchorConnection = AnchorInput = AnchorOutput = nullptr;
 
-	if (Cast<AFGBuildableConveyorBase>(Design->Anchor)) {
+	if (Cast<AFGBuildableConveyorBase>(DesignParam->Anchor)) {
 		AFSkyline* FSkyline = AFSkyline::Get(this);
-		AFGBuildableConveyorBase* Conveyor = Cast<AFGBuildableConveyorBase>(Design->Anchor);
+		AFGBuildableConveyorBase* Conveyor = Cast<AFGBuildableConveyorBase>(DesignParam->Anchor);
 		//UFGFactoryConnectionComponent* Connection = Conveyor->GetConnection0();
 		UFGFactoryConnectionComponent* Connection = FSkyline->AdaptiveUtil->GetConveyorConnection(Conveyor, 0);
-		if (!Connection->IsConnected() || !Design->IsElementSelected(Cast<AFGBuildable>(Connection->GetConnection()->GetAttachmentRootActor()))) AnchorInput = Connection;
+		if (!Connection->IsConnected() || !DesignParam->IsElementSelected(Cast<AFGBuildable>(Connection->GetConnection()->GetAttachmentRootActor()))) AnchorInput = Connection;
 		else {
 			AFGBuildable* Buildable = Cast<AFGBuildable>(Connection->GetConnection()->GetAttachmentRootActor());
-			if (!Buildable || !Design->IsElementSelected(Buildable)) AnchorInput = Connection;
+			if (!Buildable || !DesignParam->IsElementSelected(Buildable)) AnchorInput = Connection;
 		}
 
 		//Connection = Conveyor->GetConnection1();
 		Connection = FSkyline->AdaptiveUtil->GetConveyorConnection(Conveyor, 1);
-		if (!Connection->IsConnected() || !Design->IsElementSelected(Cast<AFGBuildable>(Connection->GetConnection()->GetAttachmentRootActor()))) AnchorOutput = Connection;
+		if (!Connection->IsConnected() || !DesignParam->IsElementSelected(Cast<AFGBuildable>(Connection->GetConnection()->GetAttachmentRootActor()))) AnchorOutput = Connection;
 		else {
 			AFGBuildable* Buildable = Cast<AFGBuildable>(Connection->GetConnection()->GetAttachmentRootActor());
-			if (!Buildable || !Design->IsElementSelected(Buildable)) AnchorOutput = Connection;
+			if (!Buildable || !DesignParam->IsElementSelected(Buildable)) AnchorOutput = Connection;
 		}
 
 		return AnchorConnection || AnchorInput || AnchorOutput;
 	}
 	
-	if (Cast<AFGBuildablePipeBase>(Design->Anchor)) {
-		AFGBuildablePipeBase* Pipe = Cast<AFGBuildablePipeBase>(Design->Anchor);
+	if (Cast<AFGBuildablePipeBase>(DesignParam->Anchor)) {
+		AFGBuildablePipeBase* Pipe = Cast<AFGBuildablePipeBase>(DesignParam->Anchor);
 		UFGPipeConnectionComponentBase* Connection = Pipe->GetConnection1();
 
 		if (!Connection->IsConnected()) AnchorConnection = Connection;
 		else {
 			AFGBuildable* Buildable = Cast<AFGBuildable>(Connection->GetConnection()->GetAttachmentRootActor());
-			if (!Buildable || !Design->IsElementSelected(Buildable)) AnchorConnection = Connection;
+			if (!Buildable || !DesignParam->IsElementSelected(Buildable)) AnchorConnection = Connection;
 		}
 
 		Connection = Pipe->GetConnection0();
 		if (!Connection->IsConnected()) AnchorConnection = Connection;
 		else {
 			AFGBuildable* Buildable = Cast<AFGBuildable>(Connection->GetConnection()->GetAttachmentRootActor());
-			if (!Buildable || !Design->IsElementSelected(Buildable)) AnchorConnection = Connection;
+			if (!Buildable || !DesignParam->IsElementSelected(Buildable)) AnchorConnection = Connection;
 		}
 
 		return AnchorConnection != nullptr;
 	}
 
-	if (Cast<AFGBuildableRailroadTrack>(Design->Anchor)) {
-		AFGBuildableRailroadTrack* Track = Cast<AFGBuildableRailroadTrack>(Design->Anchor);
+	if (Cast<AFGBuildableRailroadTrack>(DesignParam->Anchor)) {
+		AFGBuildableRailroadTrack* Track = Cast<AFGBuildableRailroadTrack>(DesignParam->Anchor);
 		UFGRailroadTrackConnectionComponent* Connection = Track->GetConnection(1);
 		
 		if (!Connection->IsConnected()) AnchorConnection = Connection;
 		else {
 			AFGBuildable* Buildable = Cast<AFGBuildable>(Connection->GetConnection()->GetAttachmentRootActor());
-			if (!Buildable || !Design->IsElementSelected(Buildable)) AnchorConnection = Connection;
+			if (!Buildable || !DesignParam->IsElementSelected(Buildable)) AnchorConnection = Connection;
 		}
 
 		Connection = Track->GetConnection(0);
 		if (!Connection->IsConnected()) AnchorConnection = Connection;
 		else {
 			AFGBuildable* Buildable = Cast<AFGBuildable>(Connection->GetConnection()->GetAttachmentRootActor());
-			if (!Buildable || !Design->IsElementSelected(Buildable)) AnchorConnection = Connection;
+			if (!Buildable || !DesignParam->IsElementSelected(Buildable)) AnchorConnection = Connection;
 		}
 
 		return AnchorConnection != nullptr;
@@ -124,14 +123,14 @@ bool AFSBuilder::CheckAnchor(UFSDesign* Design)
 	return true;
 }
 
-void AFSBuilder::Load(UFSDesign* Design, bool FullPreview)
+void AFSBuilder::Load(UFSDesign* DesignParam, bool FullPreview)
 {
 	AFSkyline* FSkyline = AFSkyline::Get(this);
 	FSkyline->SkylineUI->CompletionWidget->SetVisibility(ESlateVisibility::Collapsed);
 
 	SplineHologramFactory->Load();
 
-	this->Design = Design;
+	this->Design = DesignParam;
 	this->Design->RecheckNullptr();
 
 	AFGBuildable* AnchorBuildable = this->Design->Anchor.Get();
@@ -147,19 +146,19 @@ void AFSBuilder::Load(UFSDesign* Design, bool FullPreview)
 	if (AnchorInput) AnchorLocation = AnchorInput->GetComponentLocation();
 	if (AnchorConnection) AnchorLocation = AnchorConnection->GetComponentLocation();
 	
-	for (TWeakObjectPtr<AFGBuildable> BuildablePtr : Design->BuildableSet) if (BuildablePtr.Get()) {
+	for (TWeakObjectPtr<AFGBuildable> BuildablePtr : DesignParam->BuildableSet) if (BuildablePtr.Get()) {
 		AFGBuildable* Buildable = BuildablePtr.Get();
 
 		float Dist = (Buildable->GetTransform().GetLocation() - AnchorLocation).Size();
 		if (Buildable == AnchorBuildable || Dist < 10000.0f || FullPreview) {
 			UFSBuildableOperator* BuildableOperator = OperatorFactory->AcquireOperator(Buildable);
 
-			FTransform RelativeTransform;
-			AFGHologram* Hologram = BuildableOperator->HologramCopy(RelativeTransform);
+			FTransform RelativeTransformVar;
+			AFGHologram* HologramVar = BuildableOperator->HologramCopy(RelativeTransformVar);
 
-			if (Hologram) {
-				this->HologramList.Add(Hologram);
-				this->RelativeTransform.Add(RelativeTransform);
+			if (HologramVar) {
+				this->HologramList.Add(HologramVar);
+				this->RelativeTransform.Add(RelativeTransformVar);
 			}
 		}
 
@@ -168,7 +167,7 @@ void AFSBuilder::Load(UFSDesign* Design, bool FullPreview)
 	Cost.Empty();
 	AFGGameState* GameState = Cast<AFGGameState>(World->GetGameState());
 	if (!GameState || !(GameState->GetCheatNoCost() == 1)) {
-		Cost.AddResource(Design);
+		Cost.AddResource(DesignParam);
 	}
 
 	LastShow = LastValid = false;
@@ -179,10 +178,10 @@ void AFSBuilder::Load(UFSDesign* Design, bool FullPreview)
 
 void AFSBuilder::Unload()
 {
-	for (AFGHologram* Hologram : HologramList) {
-		Hologram->SetActorHiddenInGame(true);
-		Hologram->SetDisabled(true);
-		Hologram->Destroy();
+	for (AFGHologram* HologramVar : HologramList) {
+		HologramVar->SetActorHiddenInGame(true);
+		HologramVar->SetDisabled(true);
+		HologramVar->Destroy();
 	}
 	HologramList.Empty();
 	RelativeTransform.Empty();
@@ -198,12 +197,12 @@ void AFSBuilder::Unload()
 
 bool AFSBuilder::Test(const FHitResult& Hit)
 {
-	SML::Logging::info(*Hit.GetActor()->GetFullName());
-	SML::Logging::info(*Hit.GetActor()->GetTransform().ToString());
-	SML::Logging::info(*this->Hologram->GetTransform().ToString());
-	SML::Logging::info(*Hit.Location.ToString());
-	SML::Logging::info(*Hit.TraceStart.ToString());
-	SML::Logging::info(*(FString::Printf(TEXT("bBlockingHit:%s\nbStartPenetrating:%s\nTime:%f\nLocation:%s\nImpactPoint:%s\nNormal:%s\nImpactNormal:%s\nTraceStart:%s\nTraceEnd:%s\nPenetrationDepth:%f\nItem:%d\nFaceIndex:%d"),
+	UE_LOG(LogSkyline, Verbose, TEXT("%s"), (*Hit.GetActor()->GetFullName()));
+	UE_LOG(LogSkyline, Verbose, TEXT("%s"), (*Hit.GetActor()->GetTransform().ToString()));
+	UE_LOG(LogSkyline, Verbose, TEXT("%s"), (*this->Hologram->GetTransform().ToString()));
+	UE_LOG(LogSkyline, Verbose, TEXT("%s"), (*Hit.Location.ToString()));
+	UE_LOG(LogSkyline, Verbose, TEXT("%s"), (*Hit.TraceStart.ToString()));
+	UE_LOG(LogSkyline, Verbose, TEXT("%s"), (*(FString::Printf(TEXT("bBlockingHit:%s\nbStartPenetrating:%s\nTime:%f\nLocation:%s\nImpactPoint:%s\nNormal:%s\nImpactNormal:%s\nTraceStart:%s\nTraceEnd:%s\nPenetrationDepth:%f\nItem:%d\nFaceIndex:%d"),
 		Hit.bBlockingHit == true ? TEXT("True") : TEXT("False"),
 		Hit.bStartPenetrating == true ? TEXT("True") : TEXT("False"),
 		Hit.Time,
@@ -215,7 +214,7 @@ bool AFSBuilder::Test(const FHitResult& Hit)
 		*Hit.TraceEnd.ToString(),
 		Hit.PenetrationDepth,
 		Hit.Item,
-		Hit.FaceIndex)));
+		Hit.FaceIndex))));
 	
 	//Hologram->DoMultiStepPlacement(false);
 	/*
@@ -245,7 +244,7 @@ bool AFSBuilder::Build(FSRepeat* Repeat)
 	if (!CheckCost()) return false;
 
 	if (this->IsBuilding) {
-		SML::Logging::info(TEXT("Warnning: FSBuilder call build while building"));
+		UE_LOG(LogSkyline, Verbose, TEXT("Warnning: FSBuilder call build while building"));
 		return false;
 	}
 	if (!this->Design->Anchor.Get()) return false;
@@ -356,9 +355,9 @@ void AFSBuilder::Update(FSRepeat* Repeat)
 	}
 }
 
-FTransform AFSBuilder::GetFixedTargetTransform(AFGHologram* Hologram, bool& Valid)
+FTransform AFSBuilder::GetFixedTargetTransform(AFGHologram* HologramParam, bool& Valid)
 {
-	FTransform Transform = Hologram->GetTransform();
+	FTransform Transform = HologramParam->GetTransform();
 	Valid = true;
 
 	if (Cast<AFGSplineHologram>(this->Hologram)) {
@@ -453,50 +452,50 @@ FTransform AFSBuilder::GetFixedSourceTransform()
 
 bool AFSBuilder::CheckCost()
 {
-	UFSkylineUI* SkylineUI = (UFSkylineUI*)this->SkylineUI;
+	UFSkylineUI* SkylineUIVar = (UFSkylineUI*)this->SkylineUI;
 	FSInventory Left = *Inventory;
 	TMap<TSubclassOf<UFGItemDescriptor>, int> Minus;
 	Left.AddResource(&Cost, -1);
 	if (Left.Valid(Minus)) {
-		SkylineUI->ItemBox->SetVisibility(ESlateVisibility::Collapsed);
+		SkylineUIVar->ItemBox->SetVisibility(ESlateVisibility::Collapsed);
 		return true;
 	}
 
-	AFSController* FSCtrl = (AFSController*)this->FSCtrl;
-	if (FSCtrl->GetPlayer()) {
-		Left.AddResource(FSCtrl->GetPlayer()->GetInventory());
+	AFSController* FSCtrlVar = (AFSController*)this->FSCtrl;
+	if (FSCtrlVar->GetPlayer()) {
+		Left.AddResource(FSCtrlVar->GetPlayer()->GetInventory());
 		if (Left.Valid(Minus)) {
-			SkylineUI->ItemBox->SetVisibility(ESlateVisibility::Collapsed);
+			SkylineUIVar->ItemBox->SetVisibility(ESlateVisibility::Collapsed);
 			return true;
 		}
 	}
 
-	SkylineUI->ItemBox->ClearChildren();
+	SkylineUIVar->ItemBox->ClearChildren();
 	int Count = 0;
 	for (TPair<TSubclassOf<UFGItemDescriptor>, int>& Pair : Minus) {
 		UFSResourceIcon* Icon;
-		if (Count < SkylineUI->ResourceIcon.Num()) {
-			Icon = SkylineUI->ResourceIcon[Count];
+		if (Count < SkylineUIVar->ResourceIcon.Num()) {
+			Icon = SkylineUIVar->ResourceIcon[Count];
 		}
 		else {
-			TSubclassOf<UUserWidget> WidgetClass = LoadClass<UUserWidget>(this, TEXT("/Game/FactorySkyline/Widget_ResourceIcon.Widget_ResourceIcon_C"));
-			Icon = CreateWidget<UFSResourceIcon>(SkylineUI, WidgetClass);
-			SkylineUI->ResourceIcon.Add(Icon);
+			TSubclassOf<UUserWidget> WidgetClass = LoadClass<UUserWidget>(this, TEXT("/FactorySkyline/Widget_ResourceIcon.Widget_ResourceIcon_C"));
+			Icon = CreateWidget<UFSResourceIcon>(SkylineUIVar, WidgetClass);
+			SkylineUIVar->ResourceIcon.Add(Icon);
 		}
 		Icon->Load(Pair.Key, Pair.Value);
-		SkylineUI->ItemBox->AddChild(Icon);
+		SkylineUIVar->ItemBox->AddChild(Icon);
 		Count++;
 	}
-	SkylineUI->ItemBox->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+	SkylineUIVar->ItemBox->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
 
 	return false;
 }
 
 bool AFSBuilder::Consume()
 {
-	AFSController* FSCtrl = (AFSController*)this->FSCtrl;
-	if (FSCtrl->GetPlayer())
-		return Inventory->Consume(FSCtrl->GetPlayer()->GetInventory(), &Cost);
+	AFSController* FSCtrlVar = (AFSController*)this->FSCtrl;
+	if (FSCtrlVar->GetPlayer())
+		return Inventory->Consume(FSCtrlVar->GetPlayer()->GetInventory(), &Cost);
 	return Inventory->Consume(nullptr, &Cost);
 }
 
@@ -550,11 +549,11 @@ void UFSSyncBuild::PreWork()
 	//UFSSelection::SetAutoRebuildTreeAll(false);
 }
 
-bool UFSSyncBuild::DoWork(float TimeLimit)
+bool UFSSyncBuild::DoWork(float TimeLimitParam)
 {
-	this->TimeLimit = TimeLimit;
+	this->TimeLimit = TimeLimitParam;
 	Time.Start();
-	while (Time.GetTime() < TimeLimit) {
+	while (Time.GetTime() < TimeLimitParam) {
 		if (Step == 0) StepA();
 		if (Step == 1) StepB();
 		if (Step == 2) StepC();
