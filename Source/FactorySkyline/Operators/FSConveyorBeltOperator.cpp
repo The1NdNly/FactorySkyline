@@ -4,10 +4,9 @@
 #include "FSConveyorBeltOperator.h"
 #include "Buildables/FGBuildable.h"
 #include "Buildables/FGBuildableConveyorBelt.h"
-#include "FGInstancedSplineMesh.h"
+//#include "FGInstancedSplineMesh.h"
 #include "FGInstancedSplineMeshComponent.h"
-#include "FSkyline.h"
-#include "util/Logging.h"
+#include "FactorySkyline/FSkyline.h"
 
 
 AFGHologram* UFSConveyorBeltOperator::HologramCopy(FTransform& RelativeTransform)
@@ -41,7 +40,9 @@ AFGHologram* UFSConveyorBeltOperator::HologramCopy(FTransform& RelativeTransform
 
 	TSet<UActorComponent*> Set = Hologram->GetComponents();
 	for (UActorComponent* Component : Set) {
-		if (Component->GetName().Equals(TEXT("SplineMeshComponent_0"))) {
+		Log("%s", *Component->GetName());
+		auto c = Cast<USplineMeshComponent>(Component);
+		if(c) {
 			SplineMeshComponent = Cast<USplineMeshComponent>(Component);
 			break;
 		}
@@ -55,13 +56,16 @@ AFGHologram* UFSConveyorBeltOperator::HologramCopy(FTransform& RelativeTransform
 			Component->BodyInstance = SplineMeshComponent->BodyInstance;
 			Component->SetForwardAxis(SplineMeshComponent->ForwardAxis);
 			Component->SetMobility(SplineMeshComponent->Mobility);
-			for (int i = 0; i < SplineMeshComponent->GetNumMaterials(); i++)
+			for (int i = 0; i < SplineMeshComponent->GetNumMaterials(); i++) {
 				Component->SetMaterial(i, SplineMeshComponent->GetMaterial(i));
+			}
 			Component->SetStartAndEnd(Data.StartPos, Data.StartTangent, Data.EndPos, Data.EndTangent);
 			Component->AttachTo(Hologram->GetRootComponent());
 			Component->RegisterComponent();
 		}
-		else SplineMeshComponent->SetStartAndEnd(Data.StartPos, Data.StartTangent, Data.EndPos, Data.EndTangent);
+		else {
+			SplineMeshComponent->SetStartAndEnd(Data.StartPos, Data.StartTangent, Data.EndPos, Data.EndTangent);
+		}
 		NeedNew = true;
 	}
 	return Hologram;
@@ -87,7 +91,7 @@ AFGBuildable* UFSConveyorBeltOperator::CreateCopy(const FSTransformOperator& Tra
 	if (!Recipe) return nullptr;
 
 	Buildable->SetBuiltWithRecipe(Recipe);
-	Buildable->SetBuildingID(Source->GetBuildingID());
+	//Buildable->SetBuildingID(Source->GetBuildingID());
 
 	//TArray< FSplinePointData >* SourceData = &SourceConveyorBelt->mSplineData;
 	TArray< FSplinePointData >* SourceData = FSkyline->AdaptiveUtil->GetConveyorBeltSplineData(SourceConveyorBelt);

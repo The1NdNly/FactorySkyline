@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UI/FSMenuEntryBase.h"
+#include "FactorySkyline/UI/FSMenuEntryBase.h"
 #include "Blueprint/UserWidget.h"
 #include "FSMenuWidget.generated.h"
 

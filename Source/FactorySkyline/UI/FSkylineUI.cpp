@@ -1,15 +1,14 @@
 // ILikeBanas
 
 
-#include "UI/FSkylineUI.h"
-#include "UI/FSListMenuWidget.h"
-#include "FSkyline.h"
-#include "FSMenuItem.h"
+#include "FactorySkyline/UI/FSkylineUI.h"
+#include "FactorySkyline/UI/FSListMenuWidget.h"
+#include "FactorySkyline/FSkyline.h"
+#include "FactorySkyline/FSMenuItem.h"
 #include "Components/CanvasPanel.h"
 #include "Components/CanvasPanelSlot.h"
-#include "FSDesign.h"
-#include "UI/FSKeyMappingWidget.h"
-#include "util/Logging.h"
+#include "FactorySkyline/FSDesign.h"
+#include "FactorySkyline/UI/FSKeyMappingWidget.h"
 
 
 
@@ -125,37 +124,37 @@ bool UFSkylineUI::Init(UWorld* World)
 	DesignRoot = Skyline->FSCtrl->DesignRoot;
 	//Turtioul = true;
 
-	TSubclassOf<UUserWidget> WidgetClass = LoadClass<UUserWidget>(this, TEXT("/Game/FactorySkyline/Widget_FSLogo.Widget_FSLogo_C"));
+	TSubclassOf<UUserWidget> WidgetClass = LoadClass<UUserWidget>(this, TEXT("/FactorySkyline/Widget_FSLogo.Widget_FSLogo_C"));
 	if (!WidgetClass) return false;
 	Logo = Cast<UFSLogoWidget>(CreateWidget<UUserWidget>(this, WidgetClass));
 	if (!Logo) return false;
 
-	WidgetClass = LoadClass<UUserWidget>(this, TEXT("/Game/FactorySkyline/Widget_FSOperating.Widget_FSOperating_C"));
+	WidgetClass = LoadClass<UUserWidget>(this, TEXT("/FactorySkyline/Widget_FSOperating.Widget_FSOperating_C"));
 	if (!WidgetClass) return false;
 	OperatingWidget = CreateWidget<UFSOperatingWidget>(this, WidgetClass);
 	if (!OperatingWidget) return false;
 
-	WidgetClass = LoadClass<UUserWidget>(this, TEXT("/Game/FactorySkyline/Widget_Completion.Widget_Completion_C"));
+	WidgetClass = LoadClass<UUserWidget>(this, TEXT("/FactorySkyline/Widget_Completion.Widget_Completion_C"));
 	if (!WidgetClass) return false;
 	CompletionWidget = CreateWidget<UFSCompletionWidget>(this, WidgetClass);
 	if (!CompletionWidget) return false;
 	
-	WidgetClass = LoadClass<UUserWidget>(this, TEXT("/Game/FactorySkyline/Widget_RepeatConsole.Widget_RepeatConsole_C"));
+	WidgetClass = LoadClass<UUserWidget>(this, TEXT("/FactorySkyline/Widget_RepeatConsole.Widget_RepeatConsole_C"));
 	if (!WidgetClass) return false;
 	RepeatWidget = CreateWidget<UFSRepeatWidget>(this, WidgetClass);
 	if (!RepeatWidget) return false;
 
-	WidgetClass = LoadClass<UUserWidget>(this, TEXT("/Game/FactorySkyline/Widget_RectSelection.Widget_RectSelection_C"));
+	WidgetClass = LoadClass<UUserWidget>(this, TEXT("/FactorySkyline/Widget_RectSelection.Widget_RectSelection_C"));
 	if (!WidgetClass) return false;
 	SelectRect = CreateWidget<UFSSelectRect>(this, WidgetClass);
 	if (!SelectRect) return false;
 
-	WidgetClass = LoadClass<UUserWidget>(this, TEXT("/Game/FactorySkyline/Widget_KeySettings.Widget_KeySettings_C"));
+	WidgetClass = LoadClass<UUserWidget>(this, TEXT("/FactorySkyline/Widget_KeySettings.Widget_KeySettings_C"));
 	if (!WidgetClass) return false;
 	KeySettingsWidget = CreateWidget<UFSKeySettingsWidget>(this, WidgetClass);
 	if (!KeySettingsWidget) return false;
 
-	WidgetClass = LoadClass<UUserWidget>(this, TEXT("/Game/FactorySkyline/Widget_InventoryPanel.Widget_InventoryPanel_C"));
+	WidgetClass = LoadClass<UUserWidget>(this, TEXT("/FactorySkyline/Widget_InventoryPanel.Widget_InventoryPanel_C"));
 	if (!WidgetClass) return false;
 	InventoryWidget = CreateWidget<UFSInventoryWidget>(this, WidgetClass);
 	if (!InventoryWidget) return false;
@@ -331,7 +330,7 @@ void UFSkylineUI::ResetHighLight()
 
 UFSKeyMappingWidget* UFSkylineUI::AddKeyMappingHelper(const FText& Title, const FText& Key)
 {
-	TSubclassOf<UUserWidget> WidgetClass = LoadClass<UUserWidget>(this, TEXT("/Game/FactorySkyline/Widget_KeyMapping.Widget_KeyMapping_C"));
+	TSubclassOf<UUserWidget> WidgetClass = LoadClass<UUserWidget>(this, TEXT("/FactorySkyline/Widget_KeyMapping.Widget_KeyMapping_C"));
 	if (!WidgetClass) return nullptr;
 	UFSKeyMappingWidget* KeyMappingWidget = Cast<UFSKeyMappingWidget>(CreateWidget<UFSKeyMappingWidget>(this, WidgetClass));
 	if (!KeyMappingWidget) return nullptr;

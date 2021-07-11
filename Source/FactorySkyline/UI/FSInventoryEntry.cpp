@@ -2,9 +2,9 @@
 
 
 #include "FSInventoryEntry.h"
-#include "FSkyline.h"
-#include "FSController.h"
-#include "FSInventory.h"
+#include "FactorySkyline/FSkyline.h"
+#include "FactorySkyline/FSController.h"
+#include "FactorySkyline/FSInventory.h"
 
 
 FReply UFSInventoryEntry::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)

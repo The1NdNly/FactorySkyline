@@ -204,9 +204,9 @@ void UFSInput::ApplySetting()
 
 
 
-void FScaner::Init(AFGPlayerController* FGController)
+void FScaner::Init(AFGPlayerController* FGControllerParam)
 {
-	this->FGController = FGController;
+	this->FGController = FGControllerParam;
 
 	AddKey(EKeys::Escape);
 

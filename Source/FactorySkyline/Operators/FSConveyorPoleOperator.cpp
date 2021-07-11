@@ -5,7 +5,6 @@
 #include "Buildables/FGBuildablePole.h"
 #include "Hologram/FGConveyorPoleHologram.h"
 #include "FGColoredInstanceMeshProxy.h"
-#include "util/Logging.h"
 
 
 AFGHologram* UFSConveyorPoleOperator::HologramCopy(FTransform& RelativeTransform)
@@ -50,7 +49,8 @@ AFGBuildable* UFSConveyorPoleOperator::CreateCopy(const FSTransformOperator& Tra
 	if (!Recipe) return nullptr;
 
 	Buildable->SetBuiltWithRecipe(Recipe);
-	Buildable->SetBuildingID(Source->GetBuildingID());
+	//TODO:
+	//Buildable->SetBuildingID(Source->GetBuildingID());
 
 	AFGBuildablePole* SourcePole = Cast<AFGBuildablePole>(Source);
 	AFGBuildablePole* BuildablePole = Cast<AFGBuildablePole>(Buildable);

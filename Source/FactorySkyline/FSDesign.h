@@ -24,7 +24,7 @@ public:
 	bool IsElementSelected(AFGBuildable* Buildable);
 	void AddElement(AFGBuildable* Buildable);
 	void RemoveElement(AFGBuildable* Buildable);
-	void SetElementMark(AFGBuildable* Buildable, bool Mark);
+	void SetElementMark(AFGBuildable* Buildable, bool MarkParam);
 
 	void ClearAll();
 	void DismantleAll();

@@ -3,9 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UI/FSFoldWidgetBase.h"
-#include "UI/FSStatusEntry.h"
-#include "FSDesign.h"
+#include "FactorySkyline/UI/FSFoldWidgetBase.h"
+#include "FactorySkyline/UI/FSStatusEntry.h"
+#include "FactorySkyline/FSDesign.h"
 #include "Blueprint/UserWidget.h"
 #include "Buildables/FGBuildable.h"
 #include "Buildables/FGBuildableFactory.h"

@@ -2,9 +2,9 @@
 
 
 #include "FSDeletePanel.h"
-#include "FSkyline.h"
-#include "FSMenuItem.h"
-#include "UI/FSkylineUI.h"
+#include "FactorySkyline/FSkyline.h"
+#include "FactorySkyline/FSMenuItem.h"
+#include "FactorySkyline/UI/FSkylineUI.h"
 #include "Buildables/FGBuildable.h"
 
 

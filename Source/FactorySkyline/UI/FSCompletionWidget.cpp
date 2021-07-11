@@ -2,8 +2,7 @@
 
 
 #include "FSCompletionWidget.h"
-#include "FSkyline.h"
-#include "util/Logging.h"
+#include "FactorySkyline/FSkyline.h"
 
 
 UFSCompletionWidget::UFSCompletionWidget(const FObjectInitializer& ObjectInitializer)

@@ -12,9 +12,8 @@
 #include "UI/FSkylineUI.h"
 #include "UI/FSOperatingWidget.h"
 #include "UI/FSInventoryWidget.h"
-#include "UserWidget.h"
+#include "Blueprint/UserWidget.h"
 #include "Components/CanvasPanelSlot.h"
-#include "util/Logging.h"
 
 UFSMenuEntryBase* UFSMenuItem::AccquireEntry()
 {
@@ -138,12 +137,12 @@ void UFSSingleMenu::FSClick()
 
 UFSMenuEntryBase* UFSSwitchMenu::ConstructEntry()
 {
-	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/Game/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
+	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
 	if (!Entry) return nullptr;
-	Entry->DefaultTexture = FSoftObjectPath(TEXT("/Game/FactorySkyline/Icon/SwitchOff.SwitchOff"));
-	Entry->DefaultTextureOnHovered = FSoftObjectPath(TEXT("/Game/FactorySkyline/Icon/SwitchOff.SwitchOff"));
-	Entry->SwitchTexture = FSoftObjectPath(TEXT("/Game/FactorySkyline/Icon/SwitchOn.SwitchOn"));
-	Entry->SwitchTextureOnHovered = FSoftObjectPath(TEXT("/Game/FactorySkyline/Icon/SwitchOn.SwitchOn"));
+	Entry->DefaultTexture = FSoftObjectPath(TEXT("/FactorySkyline/Icon/SwitchOff.SwitchOff"));
+	Entry->DefaultTextureOnHovered = FSoftObjectPath(TEXT("/FactorySkyline/Icon/SwitchOff.SwitchOff"));
+	Entry->SwitchTexture = FSoftObjectPath(TEXT("/FactorySkyline/Icon/SwitchOn.SwitchOn"));
+	Entry->SwitchTextureOnHovered = FSoftObjectPath(TEXT("/FactorySkyline/Icon/SwitchOn.SwitchOn"));
 
 	UCanvasPanelSlot* Slot = Cast<UCanvasPanelSlot>(Entry->HorBox->Slot);
 	Slot->SetAnchors(FAnchors(0.0f, 0.0f, 1.0f, 1.0f));
@@ -218,7 +217,7 @@ UFSMenuWidget* UFSListMenu::AccquireMenuWidget()
 
 UFSMenuWidget* UFSListMenu::ConstructMenuWidget()
 {
-	UFSListMenuWidget* ListMenu = CreateUserWidget<UFSListMenuWidget>(TEXT("/Game/FactorySkyline/Widget_FSListMenu.Widget_FSListMenu_C"));
+	UFSListMenuWidget* ListMenu = CreateUserWidget<UFSListMenuWidget>(TEXT("/FactorySkyline/Widget_FSListMenu.Widget_FSListMenu_C"));
 	return ListMenu;
 }
 
@@ -276,11 +275,11 @@ void UFSListMenu::Expand()
 
 void UFSListMenu::Expand(FVector2D Position)
 {
-	UFSkylineUI* SkylineUI = Cast<UFSkylineUI>(this->SkylineUI);
+	UFSkylineUI* SkylineUIVar = Cast<UFSkylineUI>(this->SkylineUI);
 
 	UFSMenuWidget* MenuWidget = this->AccquireMenuWidget();
 
-	SkylineUI->RootPanel->AddChild(MenuWidget);
+	SkylineUIVar->RootPanel->AddChild(MenuWidget);
 	MenuWidget->SetPosition(Position);
 	this->InitWidgetStyle();
 	MenuWidget->StartAnimation();
@@ -297,16 +296,16 @@ bool UFSDesignMenu::ShouldSave_Implementation() const
 	return FSkyline && FSkyline->FSCtrl && FSkyline->FSCtrl->Etc ? !FSkyline->FSCtrl->Etc->GetBool("DontSaveAnything") : false;
 }
 
-void UFSDesignMenu::LoadInit(UObject* SkylineUI, UFSDesignMenu* Parent)
+void UFSDesignMenu::LoadInit(UObject* SkylineUIParam, UFSDesignMenu* Parent)
 {
-	this->SkylineUI = SkylineUI;
+	this->SkylineUI = SkylineUIParam;
 	this->ParentItem = Parent;
 	this->WidgetWidth = 250.0f;
 	this->WidgetHeight = 400.0f;
 	this->Height = EntryHeight * Elements.Num();
 	for (UFSMenuItem* Child : Elements) {
 		UFSDesignMenu* ChildDesign = Cast<UFSDesignMenu>(Child);
-		if (ChildDesign) ChildDesign->LoadInit(SkylineUI, this);
+		if (ChildDesign) ChildDesign->LoadInit(SkylineUIParam, this);
 	}
 }
 
@@ -314,8 +313,8 @@ UFSMenuEntryBase* UFSDesignMenu::AccquireEntry()
 {
 	if (CurrentEntry) return CurrentEntry;
 	
-	UFSkylineUI* SkylineUI = Cast<UFSkylineUI>(this->SkylineUI);
-	if (SkylineUI->EntryRecycle.Num()) CurrentEntry = SkylineUI->EntryRecycle.Pop();
+	UFSkylineUI* SkylineUIVar = Cast<UFSkylineUI>(this->SkylineUI);
+	if (SkylineUIVar->EntryRecycle.Num()) CurrentEntry = SkylineUIVar->EntryRecycle.Pop();
 	else CurrentEntry = ConstructEntry();
 
 	UFSButtonWidget* Entry = Cast<UFSButtonWidget>(CurrentEntry);
@@ -328,12 +327,12 @@ UFSMenuEntryBase* UFSDesignMenu::AccquireEntry()
 	Entry->IsEditable = true;
 
 	if (this->Design) {
-		Entry->DefaultTexture = FSoftObjectPath(TEXT("/Game/FactorySkyline/Icon/Design.Design"));
-		Entry->DefaultTextureOnHovered = FSoftObjectPath(TEXT("/Game/FactorySkyline/Icon/Design.Design"));
+		Entry->DefaultTexture = FSoftObjectPath(TEXT("/FactorySkyline/Icon/Design.Design"));
+		Entry->DefaultTextureOnHovered = FSoftObjectPath(TEXT("/FactorySkyline/Icon/Design.Design"));
 	}
 	else {
-		Entry->DefaultTexture = FSoftObjectPath(TEXT("/Game/FactorySkyline/Icon/Folder.Folder"));
-		Entry->DefaultTextureOnHovered = FSoftObjectPath(TEXT("/Game/FactorySkyline/Icon/Folder.Folder"));
+		Entry->DefaultTexture = FSoftObjectPath(TEXT("/FactorySkyline/Icon/Folder.Folder"));
+		Entry->DefaultTextureOnHovered = FSoftObjectPath(TEXT("/FactorySkyline/Icon/Folder.Folder"));
 	}
 
 	Entry->UpdateView();
@@ -364,7 +363,7 @@ UFSDesignMenu* UFSDesignMenu::CopyFrom(UObject* WorldContext, UFSDesignMenu* Sou
 
 UFSMenuEntryBase* UFSDesignMenu::ConstructEntry()
 {
-	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/Game/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
+	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
 	if (!Entry) return nullptr;
 
 	UCanvasPanelSlot* Slot = Cast<UCanvasPanelSlot>(Entry->HorBox->Slot);
@@ -381,14 +380,14 @@ UFSMenuWidget* UFSDesignMenu::AccquireMenuWidget()
 {
 	if (CurrentMenuWidget) return CurrentMenuWidget;
 
-	UFSkylineUI* SkylineUI = Cast<UFSkylineUI>(this->SkylineUI);
+	UFSkylineUI* SkylineUIVar = Cast<UFSkylineUI>(this->SkylineUI);
 	DirtyWidget = true;
 
 	if (this->Design) {
-		return CurrentMenuWidget = SkylineUI->OperatingWidget;
+		return CurrentMenuWidget = SkylineUIVar->OperatingWidget;
 	}
 
-	if (SkylineUI->WidgetRecycle.Num()) CurrentMenuWidget = SkylineUI->WidgetRecycle.Pop();
+	if (SkylineUIVar->WidgetRecycle.Num()) CurrentMenuWidget = SkylineUIVar->WidgetRecycle.Pop();
 	else CurrentMenuWidget = ConstructMenuWidget();
 
 	UFSListMenuWidget* ListMenu = Cast<UFSListMenuWidget>(CurrentMenuWidget);
@@ -402,19 +401,19 @@ UFSMenuWidget* UFSDesignMenu::AccquireMenuWidget()
 void UFSDesignMenu::ReleaseEntry()
 {
 	if (!this->CurrentEntry) return;
-	UFSkylineUI* SkylineUI = Cast<UFSkylineUI>(this->SkylineUI);
-	SkylineUI->EntryRecycle.Add(this->CurrentEntry);
+	UFSkylineUI* SkylineUIVar = Cast<UFSkylineUI>(this->SkylineUI);
+	SkylineUIVar->EntryRecycle.Add(this->CurrentEntry);
 	this->CurrentEntry = nullptr;
 }
 
 void UFSDesignMenu::ReleaseMenuWidget()
 {
 	if (!this->CurrentMenuWidget) return;
-	UFSkylineUI* SkylineUI = Cast<UFSkylineUI>(this->SkylineUI);
+	UFSkylineUI* SkylineUIVar = Cast<UFSkylineUI>(this->SkylineUI);
 
 	if (!this->Design) {
 		this->CurrentMenuWidget->Unload();
-		SkylineUI->WidgetRecycle.Add(this->CurrentMenuWidget);
+		SkylineUIVar->WidgetRecycle.Add(this->CurrentMenuWidget);
 	}
 
 	this->CurrentMenuWidget = nullptr;
@@ -432,11 +431,11 @@ void UFSDesignMenu::ExecClick()
 
 void UFSDesignMenu::Expand()
 {
-	UFSkylineUI* SkylineUI = Cast<UFSkylineUI>(this->SkylineUI);
-	SkylineUI->UnexpandStart(false);
+	UFSkylineUI* SkylineUIVar = Cast<UFSkylineUI>(this->SkylineUI);
+	SkylineUIVar->UnexpandStart(false);
 
 	UCanvasPanelSlot* Slot = Cast<UCanvasPanelSlot>(this->ParentItem->AccquireMenuWidget()->Slot);
-	if (this->Design) SkylineUI->OperatingWidget->Load(this);
+	if (this->Design) SkylineUIVar->OperatingWidget->Load(this);
 	Expand(FVector2D(Slot->GetPosition().X + Slot->GetSize().X, Slot->GetPosition().Y));
 
 	UFSButtonWidget* Entry = Cast<UFSButtonWidget>(this->AccquireEntry());
@@ -453,8 +452,8 @@ void UFSDesignMenu::Expand(FVector2D Position)
 
 void UFSDesignMenu::Unexpand()
 {
-	UFSkylineUI* SkylineUI = Cast<UFSkylineUI>(this->SkylineUI);
-	if (this->Design) SkylineUI->OperatingWidget->Unload();
+	UFSkylineUI* SkylineUIVar = Cast<UFSkylineUI>(this->SkylineUI);
+	if (this->Design) SkylineUIVar->OperatingWidget->Unload();
 	Super::Unexpand();
 }
 
@@ -480,8 +479,8 @@ void UFSDesignMenu::Fold()
 
 	CurrentSlot->SetPosition(FVector2D(50.0f, Pos.Y));
 	for (UFSMenuItem* Item = this->CurrentExpandedItem; Item; Item = Item->CurrentExpandedItem) {
-		UFSMenuWidget* Widget = Item->AccquireMenuWidget();
-		UCanvasPanelSlot* Slot = Cast<UCanvasPanelSlot>(Widget->Slot);
+		UFSMenuWidget* WidgetVar = Item->AccquireMenuWidget();
+		UCanvasPanelSlot* Slot = Cast<UCanvasPanelSlot>(WidgetVar->Slot);
 		Slot->SetPosition(FVector2D(CurrentSlot->GetPosition().X + CurrentSlot->GetSize().X, Pos.Y));
 		CurrentSlot = Slot;
 	}
@@ -513,8 +512,8 @@ void UFSDesignMenu::Unfold()
 	CurrentSlot->SetPosition(FVector2D(x, Pos.Y));
 	
 	for (Item = Item->CurrentExpandedItem; Item; Item = Item->CurrentExpandedItem) {
-		UFSMenuWidget* Widget = Item->AccquireMenuWidget();
-		UCanvasPanelSlot* Slot = Cast<UCanvasPanelSlot>(Widget->Slot);
+		UFSMenuWidget* WidgetVar = Item->AccquireMenuWidget();
+		UCanvasPanelSlot* Slot = Cast<UCanvasPanelSlot>(WidgetVar->Slot);
 		Slot->SetPosition(FVector2D(CurrentSlot->GetPosition().X + CurrentSlot->GetSize().X, Pos.Y));
 		CurrentSlot = Slot;
 	}
@@ -523,7 +522,7 @@ void UFSDesignMenu::Unfold()
 
 UFSMenuEntryBase* UFSGettingStartMenu::ConstructEntry()
 {
-	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/Game/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
+	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
 	if (!Entry) return nullptr;
 	Entry->MenuText->SetText(FText::FromString(TEXT("Getting Start")));
 	Entry->SetHightLightView();
@@ -547,7 +546,7 @@ void UFSGettingStartMenu::InitItem()
 
 UFSMenuEntryBase* UFSFastConstructMenu::ConstructEntry()
 {
-	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/Game/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
+	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
 	if (!Entry) return nullptr;
 	Entry->MenuText->SetText(FText::FromString(TEXT("Fast Construct")));
 	return Entry;
@@ -563,7 +562,7 @@ void UFSFastConstructMenu::InitItem()
 
 UFSMenuEntryBase* UFSNewDesignMenu::ConstructEntry()
 {
-	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/Game/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
+	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
 	if (!Entry) return nullptr;
 	Entry->MenuText->SetText(FText::FromString(TEXT("New Design")));
 	return Entry;
@@ -571,16 +570,16 @@ UFSMenuEntryBase* UFSNewDesignMenu::ConstructEntry()
 
 void UFSNewDesignMenu::ExecClick()
 {
-	UFSkylineUI* SkylineUI = Cast<UFSkylineUI>(this->SkylineUI);
-	UFSDesignMenu* Design = SkylineUI->FindLastDesignItem();
+	UFSkylineUI* SkylineUIVar = Cast<UFSkylineUI>(this->SkylineUI);
+	UFSDesignMenu* Design = SkylineUIVar->FindLastDesignItem();
 	UFSDesignMenu* Child = UFSDesignMenu::CreateDesignMenu(Design, true);
 	Design->AddChild(Child);
-	if (SkylineUI->Turtioul) {
-		SkylineUI->UnexpandStart(false);
-		SkylineUI->FinishTurtioul();
+	if (SkylineUIVar->Turtioul) {
+		SkylineUIVar->UnexpandStart(false);
+		SkylineUIVar->FinishTurtioul();
 	}
 	else {
-		SkylineUI->UnexpandStart(true);
+		SkylineUIVar->UnexpandStart(true);
 		Child->FSClick();
 	}
 }
@@ -588,7 +587,7 @@ void UFSNewDesignMenu::ExecClick()
 
 UFSMenuEntryBase* UFSNewFolderMenu::ConstructEntry()
 {
-	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/Game/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
+	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
 	if (!Entry) return nullptr;
 	Entry->MenuText->SetText(FText::FromString(TEXT("New Folder")));
 	return Entry;
@@ -596,24 +595,24 @@ UFSMenuEntryBase* UFSNewFolderMenu::ConstructEntry()
 
 void UFSNewFolderMenu::ExecClick()
 {
-	UFSkylineUI* SkylineUI = Cast<UFSkylineUI>(this->SkylineUI);
-	UFSDesignMenu* Design = SkylineUI->FindLastDesignItem();
+	UFSkylineUI* SkylineUIVar = Cast<UFSkylineUI>(this->SkylineUI);
+	UFSDesignMenu* Design = SkylineUIVar->FindLastDesignItem();
 	UFSDesignMenu* Child = UFSDesignMenu::CreateDesignMenu(Design, false);
 	Child->FileName = FText::FromString(TEXT("Unnamed Folder"));
 	Design->AddChild(Child);
-	if (SkylineUI->Turtioul) {
-		SkylineUI->UnexpandStart(false);
-		SkylineUI->FinishTurtioul();
+	if (SkylineUIVar->Turtioul) {
+		SkylineUIVar->UnexpandStart(false);
+		SkylineUIVar->FinishTurtioul();
 	}
 	else {
-		SkylineUI->UnexpandStart(true);
+		SkylineUIVar->UnexpandStart(true);
 		Child->FSClick();
 	}
 }
 
 UFSMenuEntryBase* UFSKeySettingMenu::ConstructEntry()
 {
-	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/Game/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
+	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
 	if (!Entry) return nullptr;
 	Entry->MenuText->SetText(FText::FromString(TEXT("Key Settings")));
 	return Entry;
@@ -621,19 +620,19 @@ UFSMenuEntryBase* UFSKeySettingMenu::ConstructEntry()
 
 void UFSKeySettingMenu::ExecClick()
 {
-	UFSkylineUI* SkylineUI = Cast<UFSkylineUI>(this->SkylineUI);
-	if (SkylineUI->Turtioul) {
-		SkylineUI->UnexpandStart(false);
+	UFSkylineUI* SkylineUIVar = Cast<UFSkylineUI>(this->SkylineUI);
+	if (SkylineUIVar->Turtioul) {
+		SkylineUIVar->UnexpandStart(false);
 	}
 	else {
-		SkylineUI->UnexpandStart(true);
+		SkylineUIVar->UnexpandStart(true);
 	}
-	SkylineUI->KeySettingsWidget->Start();
+	SkylineUIVar->KeySettingsWidget->Start();
 }
 
 UFSMenuEntryBase* UFSInventoryMenu::ConstructEntry()
 {
-	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/Game/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
+	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
 	if (!Entry) return nullptr;
 	Entry->MenuText->SetText(FText::FromString(TEXT("Inventory")));
 	return Entry;
@@ -641,19 +640,19 @@ UFSMenuEntryBase* UFSInventoryMenu::ConstructEntry()
 
 void UFSInventoryMenu::ExecClick()
 {
-	UFSkylineUI* SkylineUI = Cast<UFSkylineUI>(this->SkylineUI);
-	if (SkylineUI->Turtioul) {
-		SkylineUI->UnexpandStart(false);
+	UFSkylineUI* SkylineUIVar = Cast<UFSkylineUI>(this->SkylineUI);
+	if (SkylineUIVar->Turtioul) {
+		SkylineUIVar->UnexpandStart(false);
 	}
 	else {
-		SkylineUI->UnexpandStart(true);
+		SkylineUIVar->UnexpandStart(true);
 	}
-	SkylineUI->InventoryWidget->Toggle();
+	SkylineUIVar->InventoryWidget->Toggle();
 }
 
 UFSMenuEntryBase* UFSTookitMenu::ConstructEntry()
 {
-	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/Game/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
+	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
 	if (!Entry) return nullptr;
 	Entry->MenuText->SetText(FText::FromString(TEXT("Tookits")));
 	return Entry;
@@ -674,7 +673,7 @@ void UFSTookitMenu::InitItem()
 
 UFSMenuEntryBase* UFSFoundationIConstructMenu::ConstructEntry()
 {
-	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/Game/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
+	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
 	if (!Entry) return nullptr;
 	Entry->MenuText->SetText(FText::FromString(TEXT("Foundation I")));
 	return Entry;
@@ -682,7 +681,7 @@ UFSMenuEntryBase* UFSFoundationIConstructMenu::ConstructEntry()
 
 UFSMenuEntryBase* UFSFoundationIIConstructMenu::ConstructEntry()
 {
-	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/Game/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
+	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
 	if (!Entry) return nullptr;
 	Entry->MenuText->SetText(FText::FromString(TEXT("Foundation II")));
 	return Entry;
@@ -690,7 +689,7 @@ UFSMenuEntryBase* UFSFoundationIIConstructMenu::ConstructEntry()
 
 UFSMenuEntryBase* UFSInventoryOptionsMenu::ConstructEntry()
 {
-	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/Game/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
+	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
 	if (!Entry) return nullptr;
 	Entry->MenuText->SetText(FText::FromString(TEXT("Inventory Options")));
 	UCanvasPanelSlot* Slot = Cast<UCanvasPanelSlot>(Entry->HorBox->Slot);
@@ -724,7 +723,7 @@ void UFSRecycleMaterialsMenu::onSwitcherChanged()
 
 UFSMenuEntryBase* UFSTookitFlyMenu::ConstructEntry()
 {
-	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/Game/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
+	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
 	if (!Entry) return nullptr;
 	Entry->MenuText->SetText(FText::FromString(TEXT("I Wanna Fly")));
 	UCanvasPanelSlot* Slot = Cast<UCanvasPanelSlot>(Entry->HorBox->Slot);
@@ -770,7 +769,7 @@ void UFSDoubleShiftSprintMenu::InitItem()
 
 UFSMenuEntryBase* UFSFogControlMenu::ConstructEntry()
 {
-	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/Game/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
+	UFSButtonWidget* Entry = CreateUserWidget<UFSButtonWidget>(TEXT("/FactorySkyline/Widget_FSButton.Widget_FSButton_C"));
 	if (!Entry) return nullptr;
 	Entry->MenuText->SetText(FText::FromString(TEXT("Fog Control")));
 	UCanvasPanelSlot* Slot = Cast<UCanvasPanelSlot>(Entry->HorBox->Slot);

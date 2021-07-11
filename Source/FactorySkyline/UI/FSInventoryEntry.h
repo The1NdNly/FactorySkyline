@@ -3,7 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UI/FSButtonWidget.h"
+#include "FactorySkyline/UI/FSButtonWidget.h"
+#include "Resources/FGItemDescriptor.h"
+
 #include "FSInventoryEntry.generated.h"
 
 /**

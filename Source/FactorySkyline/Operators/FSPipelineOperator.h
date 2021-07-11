@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Buildables/FGBuildable.h"
-#include "Operators/FSBuildableOperator.h"
+#include "FactorySkyline/Operators/FSBuildableOperator.h"
 #include "FSPipelineOperator.generated.h"
 
 /**

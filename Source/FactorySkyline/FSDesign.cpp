@@ -65,7 +65,7 @@ void UFSDesign::RemoveElement(AFGBuildable* Buildable)
 	BuildableSet.Remove(Buildable);
 }
 
-void UFSDesign::SetElementMark(AFGBuildable* Buildable, bool Mark)
+void UFSDesign::SetElementMark(AFGBuildable* Buildable, bool MarkParam)
 {
 	//BuildableMark[Buildable] = Mark;
 }
@@ -100,14 +100,14 @@ void UFSDesign::DismantleAll()
 
 void UFSDesign::RecheckNullptr()
 {
-	TSet< TWeakObjectPtr<AFGBuildable> > Set;
-	TMap< TWeakObjectPtr<AFGBuildable>, int> Mark;
+	TSet< TWeakObjectPtr<AFGBuildable> > SetVar;
+	TMap< TWeakObjectPtr<AFGBuildable>, int> MarkVar;
 
 	for (TWeakObjectPtr<AFGBuildable>& Ptr : this->BuildableSet)
-		if (Ptr.Get()) Set.Add(Ptr);
+		if (Ptr.Get()) SetVar.Add(Ptr);
 	for (TPair<TWeakObjectPtr<AFGBuildable>, int>& Pair : this->BuildableMark)
-		if (Pair.Key.Get()) Mark.Add(Pair);
+		if (Pair.Key.Get()) MarkVar.Add(Pair);
 
-	this->BuildableSet = Set;
-	this->BuildableMark = Mark;
+	this->BuildableSet = SetVar;
+	this->BuildableMark = MarkVar;
 }

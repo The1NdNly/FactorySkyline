@@ -121,7 +121,7 @@ public:
 	const int MaxElementCount = 8;
 
 	void BuildTree(const TSet<TWeakObjectPtr<AFGBuildable>>& BuildableSet, APlayerController* Player);
-	void QueryDelta(TArray<TWeakObjectPtr<AFGBuildable> >& Positive, TArray<TWeakObjectPtr<AFGBuildable> >& Nagetive, const Int2D& StartOld, const Int2D& EndOld, const Int2D& StartNew, const Int2D& EndNew);
+	void QueryDelta(TArray<TWeakObjectPtr<AFGBuildable> >& PositiveParam, TArray<TWeakObjectPtr<AFGBuildable> >& NagetiveParam, const Int2D& StartOld, const Int2D& EndOld, const Int2D& StartNew, const Int2D& EndNew);
 
 private:
 

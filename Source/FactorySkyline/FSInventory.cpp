@@ -5,12 +5,11 @@
 #include "FSkyline.h"
 #include "FGRecipe.h"
 #include "Resources/FGItemDescriptor.h"
-#include "util/Logging.h"
 
 
-void FSInventory::Init(UFSSplineHologramFactory* SplineHologramFactory)
+void FSInventory::Init(UFSSplineHologramFactory* SplineHologramFactoryParam)
 {
-	this->SplineHologramFactory = SplineHologramFactory;
+	this->SplineHologramFactory = SplineHologramFactoryParam;
 }
 
 void FSInventory::AddResource(FSInventory* Inventory, int Multiplier)
@@ -46,7 +45,9 @@ void FSInventory::AddResource(AFGBuildable* Buildable, int Multiplier)
 	if (!Recipe) Recipe = Buildable->GetBuiltWithRecipe();
 	if (!Recipe) return;
 
-	this->AddResource(UFGRecipe::GetIngredients(Recipe), Buildable->GetDismantleRefundReturnsMultiplier() * Multiplier);
+	//TODO: Figure out why GetDismantleRefundReturnsMultiplier() gives millions
+	//this->AddResource(UFGRecipe::GetIngredients(Recipe), Buildable->GetDismantleRefundReturnsMultiplier() * Multiplier);
+	this->AddResource(UFGRecipe::GetIngredients(Recipe), 1 * Multiplier);
 }
 
 void FSInventory::AddResourceCheckRecipe(AFGBuildable* Buildable, int Multiplier)
@@ -55,7 +56,9 @@ void FSInventory::AddResourceCheckRecipe(AFGBuildable* Buildable, int Multiplier
 	TSubclassOf< class UFGRecipe > Recipe = Buildable->GetBuiltWithRecipe();
 	if (!Recipe) return;
 
-	this->AddResource(UFGRecipe::GetIngredients(Recipe), Buildable->GetDismantleRefundReturnsMultiplier() * Multiplier);
+	//TODO: Figure out why GetDismantleRefundReturnsMultiplier() gives millions
+	//this->AddResource(UFGRecipe::GetIngredients(Recipe), Buildable->GetDismantleRefundReturnsMultiplier() * Multiplier);
+	this->AddResource(UFGRecipe::GetIngredients(Recipe), 1 * Multiplier);
 }
 
 void FSInventory::AddResource(const TArray<FItemAmount>& Items, int Multiplier)
@@ -117,11 +120,11 @@ bool FSInventory::Valid(TMap<TSubclassOf<UFGItemDescriptor>, int>& Minus)
 	return Res;
 }
 
-void FSInventory::GetStorageIfDirty(TMap<TSubclassOf<UFGItemDescriptor>, int>& Storage, bool& Dirty)
+void FSInventory::GetStorageIfDirty(TMap<TSubclassOf<UFGItemDescriptor>, int>& StorageParam, bool& DirtyParam)
 {
 	FScopeLock ScopeLock(&Mutex);
-	Dirty = this->Dirty;
-	if (Dirty) Storage = this->Storage;
+	DirtyParam = this->Dirty;
+	if (DirtyParam) StorageParam = this->Storage;
 	this->Dirty = false;
 }
 

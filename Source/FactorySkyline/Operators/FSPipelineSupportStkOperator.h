@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Operators/FSPipelineSupportOperator.h"
+#include "FactorySkyline/Operators/FSPipelineSupportOperator.h"
 #include "FSPipelineSupportStkOperator.generated.h"
 
 /**
