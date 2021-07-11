@@ -7,6 +7,7 @@ public class FactorySkyline : ModuleRules
     public FactorySkyline(ReadOnlyTargetRules Target) : base(Target)
     {
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+        ShadowVariableWarningLevel = WarningLevel.Off;
 
         PublicDependencyModuleNames.AddRange(new string[] {
             "Core", "CoreUObject",

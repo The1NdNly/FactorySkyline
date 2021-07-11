@@ -2,8 +2,9 @@
 
 
 #include "FSAdvancedCopyPanel.h"
-#include "FSkyline.h"
+#include "FactorySkyline/FSkyline.h"
 #include "Windows/WindowsPlatformApplicationMisc.h"
+#include <sstream>
 
 UFSAdvancedCopyPanel::UFSAdvancedCopyPanel(const FObjectInitializer& ObjectInitializer)
 	:Super(ObjectInitializer)

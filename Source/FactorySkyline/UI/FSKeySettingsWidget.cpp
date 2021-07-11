@@ -2,8 +2,7 @@
 
 
 #include "FSKeySettingsWidget.h"
-#include "FSkyline.h"
-#include "util/Logging.h"
+#include "FactorySkyline/FSkyline.h"
 
 
 UFSKeySettingsWidget::UFSKeySettingsWidget(const FObjectInitializer& ObjectInitializer)
@@ -73,7 +72,7 @@ void UFSKeySettingsWidget::Start()
 
 void UFSKeySettingsWidget::AddEntry(const FName& Action)
 {
-	TSubclassOf<UUserWidget> WidgetClass = LoadClass<UUserWidget>(this, TEXT("/Game/FactorySkyline/Widget_KeySettingPanel.Widget_KeySettingPanel_C"));
+	TSubclassOf<UUserWidget> WidgetClass = LoadClass<UUserWidget>(this, TEXT("/FactorySkyline/Widget_KeySettingPanel.Widget_KeySettingPanel_C"));
 	if (!WidgetClass) return;
 	UFSKeySettingEntry* Entry = CreateWidget<UFSKeySettingEntry>(this, WidgetClass);
 	if (!Entry) return;

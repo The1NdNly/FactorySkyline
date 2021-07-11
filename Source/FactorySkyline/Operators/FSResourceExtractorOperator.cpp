@@ -36,7 +36,8 @@ AFGBuildable* UFSResourceExtractorOperator::CreateCopy(const FSTransformOperator
 			if (!Recipe) return nullptr;
 
 			Buildable->SetBuiltWithRecipe(Recipe);
-			Buildable->SetBuildingID(Source->GetBuildingID());
+			//TODO:
+			//Buildable->SetBuildingID(Source->GetBuildingID());
 
 			TargetExtractor->SetExtractableResource(Resource);
 

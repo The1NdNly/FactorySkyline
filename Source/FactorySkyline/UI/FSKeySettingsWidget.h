@@ -5,8 +5,8 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Button.h"
-#include "FSInput.h"
-#include "UI/FSKeySettingEntry.h"
+#include "FactorySkyline/FSInput.h"
+#include "FactorySkyline/UI/FSKeySettingEntry.h"
 #include "FSKeySettingsWidget.generated.h"
 
 /**

@@ -14,6 +14,8 @@
 #include "Equipment/FGEquipment.h"
 #include "FSBuilder.generated.h"
 
+class UFSSyncBuild;
+
 struct FSRepeat
 {
 	FTransform Source;
@@ -41,8 +43,8 @@ public:
 
 	bool FindRecipeByName(const FString& Name, TSubclassOf< class UFGRecipe >& Result);
 
-	bool CheckAnchor(UFSDesign* Design);
-	void Load(UFSDesign* Design, bool FullPreview);
+	bool CheckAnchor(UFSDesign* DesignParam);
+	void Load(UFSDesign* DesignParam, bool FullPreview);
 	void Unload();
 
 	bool Test(const FHitResult& Hit);
@@ -50,7 +52,7 @@ public:
 	bool CheckReady(float TimeLimit);
 	void Update(const FHitResult& Hit);
 	void Update(FSRepeat* Repeat);
-	FTransform GetFixedTargetTransform(AFGHologram* Hologram, bool& Valid);
+	FTransform GetFixedTargetTransform(AFGHologram* HologramParam, bool& Valid);
 	FTransform GetFixedSourceTransform();
 
 	bool CheckCost();
@@ -118,7 +120,7 @@ public:
 	virtual void Load();
 	virtual void Unload();
 	virtual void PreWork();
-	virtual bool DoWork(float TimeLimit);
+	virtual bool DoWork(float TimeLimitParam);
 	void StepA();
 	void StepB();
 	void StepC();

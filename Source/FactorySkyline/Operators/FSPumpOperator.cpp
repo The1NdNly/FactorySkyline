@@ -18,7 +18,8 @@ AFGBuildable* UFSPumpOperator::CreateCopy(const FSTransformOperator& TransformOp
 	if (!Recipe) return nullptr;
 
 	Buildable->SetBuiltWithRecipe(Recipe);
-	Buildable->SetBuildingID(Source->GetBuildingID());
+	//TODO:
+	//Buildable->SetBuildingID(Source->GetBuildingID());
 
 	Buildable->SetColorSlot_Implementation(Source->GetColorSlot_Implementation());
 	Buildable->FinishSpawning(Transform);

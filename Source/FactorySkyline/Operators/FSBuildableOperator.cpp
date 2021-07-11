@@ -1,41 +1,41 @@
 // ILikeBanas
 
 
-#include "Operators/FSBuildableOperator.h"
+#include "FactorySkyline/Operators/FSBuildableOperator.h"
 
-#include "FSkyline.h"
-#include "FSBuilder.h"
-#include "Operators/FSBuildingOperator.h"
-#include "Operators/FSConveyorOperator.h"
-#include "Operators/FSConveyorBeltOperator.h"
-#include "Operators/FSConveyorLiftOperator.h"
-#include "Operators/FSConveyorPoleOperator.h"
-#include "Operators/FSConveyorPoleStackableOperator.h"
-#include "Operators/FSFactoryOperator.h"
-#include "Operators/FSFoundationOperator.h"
-#include "Operators/FSGeneratorOperator.h"
-#include "Operators/FSJumppadOperator.h"
-#include "Operators/FSLadderOperator.h"
-#include "Operators/FSManufacturerOperator.h"
-#include "Operators/FSPipelineSupportOperator.h"
-#include "Operators/FSPipelineSupportStkOperator.h"
-#include "Operators/FSPipelineOperator.h"
-#include "Operators/FSPowerPoleOperator.h"
-#include "Operators/FSPumpOperator.h"
-#include "Operators/FSRailroadSwitchOperator.h"
-#include "Operators/FSRailroadTrackOperator.h"
-#include "Operators/FSResourceExtractorOperator.h"
-#include "Operators/FSConveyorAttachmentOperator.h"
-#include "Operators/FSConveyorSmartSplitterOperator.h"
-#include "Operators/FSStorageOperator.h"
-#include "Operators/FSTowerOperator.h"
-#include "Operators/FSTradingPostOperator.h"
-#include "Operators/FSTrainPlatformOperator.h"
-#include "Operators/FSTrainPlatformCargoOperator.h"
-#include "Operators/FSTrainStationOperator.h"
-#include "Operators/FSWalkwayOperator.h"
-#include "Operators/FSWallOperator.h"
-#include "Operators/FSWireOperator.h"
+#include "FactorySkyline/FSkyline.h"
+#include "FactorySkyline/FSBuilder.h"
+#include "FactorySkyline/Operators/FSBuildingOperator.h"
+#include "FactorySkyline/Operators/FSConveyorOperator.h"
+#include "FactorySkyline/Operators/FSConveyorBeltOperator.h"
+#include "FactorySkyline/Operators/FSConveyorLiftOperator.h"
+#include "FactorySkyline/Operators/FSConveyorPoleOperator.h"
+#include "FactorySkyline/Operators/FSConveyorPoleStackableOperator.h"
+#include "FactorySkyline/Operators/FSFactoryOperator.h"
+#include "FactorySkyline/Operators/FSFoundationOperator.h"
+#include "FactorySkyline/Operators/FSGeneratorOperator.h"
+#include "FactorySkyline/Operators/FSJumppadOperator.h"
+#include "FactorySkyline/Operators/FSLadderOperator.h"
+#include "FactorySkyline/Operators/FSManufacturerOperator.h"
+#include "FactorySkyline/Operators/FSPipelineSupportOperator.h"
+#include "FactorySkyline/Operators/FSPipelineSupportStkOperator.h"
+#include "FactorySkyline/Operators/FSPipelineOperator.h"
+#include "FactorySkyline/Operators/FSPowerPoleOperator.h"
+#include "FactorySkyline/Operators/FSPumpOperator.h"
+#include "FactorySkyline/Operators/FSRailroadSwitchOperator.h"
+#include "FactorySkyline/Operators/FSRailroadTrackOperator.h"
+#include "FactorySkyline/Operators/FSResourceExtractorOperator.h"
+#include "FactorySkyline/Operators/FSConveyorAttachmentOperator.h"
+#include "FactorySkyline/Operators/FSConveyorSmartSplitterOperator.h"
+#include "FactorySkyline/Operators/FSStorageOperator.h"
+#include "FactorySkyline/Operators/FSTowerOperator.h"
+#include "FactorySkyline/Operators/FSTradingPostOperator.h"
+#include "FactorySkyline/Operators/FSTrainPlatformOperator.h"
+#include "FactorySkyline/Operators/FSTrainPlatformCargoOperator.h"
+#include "FactorySkyline/Operators/FSTrainStationOperator.h"
+#include "FactorySkyline/Operators/FSWalkwayOperator.h"
+#include "FactorySkyline/Operators/FSWallOperator.h"
+#include "FactorySkyline/Operators/FSWireOperator.h"
 
 #include "Buildables/FGBuildable.h"
 #include "Buildables/FGBuildableAttachmentMerger.h"
@@ -82,7 +82,6 @@
 #include "FGPowerConnectionComponent.h"
 #include "FGRecipe.h"
 #include "FGRecipeManager.h"
-#include "util/Logging.h"
 
 
 AFGHologram* UFSBuildableOperator::CreateHologram()
@@ -140,7 +139,8 @@ AFGBuildable* UFSBuildableOperator::CreateCopy(const FSTransformOperator& Transf
 	if (!Recipe) return nullptr;
 
 	Buildable->SetBuiltWithRecipe(Recipe);
-	Buildable->SetBuildingID(Source->GetBuildingID());
+	//TODO:
+	//Buildable->SetBuildingID(Source->GetBuildingID());
 
 	Buildable->SetColorSlot_Implementation(Source->GetColorSlot_Implementation());
 	Buildable->FinishSpawning(Transform);
@@ -614,12 +614,11 @@ AFGConveyorBeltHologram* UFSSplineHologramFactory::CreateBeltHologram(AFGBuildab
 
 	return ConveyorBeltHologram;
 }*/
-
+#pragma optimize ("", off)
 AFGConveyorLiftHologram* UFSSplineHologramFactory::CreateLiftHologram(AFGBuildableConveyorLift* ConveyorLift, FTransform& RelativeTransform)
 {
 	AFSkyline* FSkyline = AFSkyline::Get(this);
 	TSubclassOf< UFGRecipe > ConveyorPoleRecipe = LoadClass<UFGRecipe>(this, TEXT("/Game/FactoryGame/Recipes/Buildings/Recipe_ConveyorPole.Recipe_ConveyorPole_C"));
-
 	if (!ConveyorPole) {
 		FTransform Transform(FRotator(0.0f, 0.0f, 0.0f), FVector(-53821.339844f, 244785.484375f, -13746.879639f));
 		ConveyorPole = Cast<AFGBuildablePole>(BuildableSubsystem->BeginSpawnBuildable(AFGBuildable::GetBuildableClassFromRecipe(ConveyorPoleRecipe), Transform));
@@ -657,8 +656,9 @@ AFGConveyorLiftHologram* UFSSplineHologramFactory::CreateLiftHologram(AFGBuildab
 
 	TSubclassOf<UFGRecipe> HologramRecipe = this->GetRecipeFromClass(ConveyorLift->GetClass());
 	if (!HologramRecipe) return nullptr;
-
-	AFGConveyorLiftHologram* ConveyorLiftHologram = Cast<AFGConveyorLiftHologram>(AFGHologram::SpawnHologramFromRecipe(HologramRecipe, Builder, FVector(), ((AFSkyline*)Skyline)->FSCtrl->GetPlayer()));
+	Log("%s", (*UFGRecipe::GetRecipeName(HologramRecipe).ToString()));
+	auto SpawnedLiftHologram = AFGHologram::SpawnHologramFromRecipe(HologramRecipe, Builder, FVector(), ((AFSkyline*)Skyline)->FSCtrl->GetPlayer());
+	AFGConveyorLiftHologram* ConveyorLiftHologram = Cast<AFGConveyorLiftHologram>(SpawnedLiftHologram);
 	ConveyorLiftHologram->SetHologramLocationAndRotation(Hit);
 	ConveyorLiftHologram->DoMultiStepPlacement(false);
 
@@ -676,6 +676,7 @@ AFGConveyorLiftHologram* UFSSplineHologramFactory::CreateLiftHologram(AFGBuildab
 
 	return ConveyorLiftHologram;
 }
+#pragma optimize ("", on)
 
 AFGPipelineHologram* UFSSplineHologramFactory::CreatePipelineHologram(AFGBuildablePipeline* Pipeline, FTransform& RelativeTransform)
 {

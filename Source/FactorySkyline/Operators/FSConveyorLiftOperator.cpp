@@ -5,7 +5,7 @@
 #include "Buildables/FGBuildable.h"
 #include "Buildables/FGBuildableConveyorLift.h"
 #include "Hologram/FGConveyorLiftHologram.h"
-#include "FSkyline.h"
+#include "FactorySkyline/FSkyline.h"
 
 void UFSConveyorLiftOperator::UpdateHologramState(const FHitResult& Hit, AFGHologram* Hologram, bool& ShouldShow, bool& Valid)
 {
@@ -59,7 +59,7 @@ AFGBuildable* UFSConveyorLiftOperator::CreateCopy(const FSTransformOperator& Tra
 	if (!Recipe) return nullptr;
 
 	Buildable->SetBuiltWithRecipe(Recipe);
-	Buildable->SetBuildingID(Source->GetBuildingID());
+	//Buildable->SetBuildingID(Source->GetBuildingID());
 	/*
 	TargetConveyorLift->mTopTransform = SourceConveyorLift->mTopTransform;
 	TargetConveyorLift->mIsReversed = SourceConveyorLift->mIsReversed;

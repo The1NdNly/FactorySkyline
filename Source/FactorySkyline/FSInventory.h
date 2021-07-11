@@ -26,7 +26,7 @@ public:
 
 	FSInventory& operator =(const FSInventory& Other) { SplineHologramFactory = Other.SplineHologramFactory; Storage = Other.Storage; Dirty = true; return *this; }
 
-	void Init(UFSSplineHologramFactory* SplineHologramFactory);
+	void Init(UFSSplineHologramFactory* SplineHologramFactoryParam);
 	void AddResource(FSInventory* Inventory, int Multiplier = 1);
 	void AddResource(UFSDesign* Design, int Multiplier = 1);
 	void AddResource(UFGInventoryComponent* InventoryComponent, int Multiplier = 1);
@@ -40,7 +40,7 @@ public:
 	void Empty();
 
 	bool Valid(TMap<TSubclassOf<UFGItemDescriptor>, int>& Minus);
-	void GetStorageIfDirty(TMap<TSubclassOf<UFGItemDescriptor>, int>& Storage, bool& Dirty);
+	void GetStorageIfDirty(TMap<TSubclassOf<UFGItemDescriptor>, int>& StorageParam, bool& DirtyParam);
 	bool Consume(UFGInventoryComponent* PlayerInventory, const FSInventory* Cost);
 	void TakeOut(UFGInventoryComponent* PlayerInventory, TSubclassOf<UFGItemDescriptor> ItemClass);
 

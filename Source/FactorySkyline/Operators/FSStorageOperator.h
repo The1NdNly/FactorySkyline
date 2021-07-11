@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Operators/FSFactoryOperator.h"
+#include "FactorySkyline/Operators/FSFactoryOperator.h"
 #include "FSStorageOperator.generated.h"
 
 /**

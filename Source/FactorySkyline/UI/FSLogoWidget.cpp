@@ -1,14 +1,13 @@
 // ILikeBanas
 
 
-#include "UI/FSLogoWidget.h"
-#include "UI/FSButtonWidget.h"
-#include "UI/FSkylineUI.h"
-#include "FSkyline.h"
+#include "FactorySkyline/UI/FSLogoWidget.h"
+#include "FactorySkyline/UI/FSButtonWidget.h"
+#include "FactorySkyline/UI/FSkylineUI.h"
+#include "FactorySkyline/FSkyline.h"
 #include "Components/CanvasPanel.h"
 #include "Components/CanvasPanelSlot.h"
-#include "FSMenuItem.h"
-#include "util/Logging.h"
+#include "FactorySkyline/FSMenuItem.h"
 
 UFSLogoWidget::UFSLogoWidget(const FObjectInitializer& ObjectInitializer)
 	:Super(ObjectInitializer)

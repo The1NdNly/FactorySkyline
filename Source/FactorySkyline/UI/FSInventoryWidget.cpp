@@ -2,8 +2,10 @@
 
 
 #include "FSInventoryWidget.h"
-#include "FSkyline.h"
-#include "FSInput.h"
+
+#include "FSInventoryEntry.h"
+#include "FactorySkyline/FSkyline.h"
+#include "FactorySkyline/FSInput.h"
 
 
 UFSInventoryWidget::UFSInventoryWidget(const FObjectInitializer& ObjectInitializer)
@@ -88,7 +90,7 @@ UFSInventoryEntry* UFSInventoryWidget::AccquireEntry(TSubclassOf<UFGItemDescript
 {
 	UFSInventoryEntry** Res = EntryMapping.Find(ItemClass);
 	if (!Res) {
-		TSubclassOf<UUserWidget> WidgetClass = LoadClass<UUserWidget>(this, TEXT("/Game/FactorySkyline/Widget_InventoryEntry.Widget_InventoryEntry_C"));
+		TSubclassOf<UUserWidget> WidgetClass = LoadClass<UUserWidget>(this, TEXT("/FactorySkyline/Widget_InventoryEntry.Widget_InventoryEntry_C"));
 		UFSInventoryEntry* Entry = Cast<UFSInventoryEntry>(CreateWidget<UFSInventoryEntry>(this, WidgetClass));
 		Entry->Init(ItemClass, UFGItemDescriptor::GetSmallIcon(ItemClass));
 		Res = &EntryMapping.Add(ItemClass, Entry);

@@ -3,8 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Operators/FSTrainPlatformOperator.h"
-#include "Operators/FSBuildableOperator.h"
+#include "FactorySkyline/Operators/FSTrainPlatformOperator.h"
+#include "FactorySkyline/Operators/FSBuildableOperator.h"
 #include "FSTrainPlatformCargoOperator.generated.h"
 
 /**

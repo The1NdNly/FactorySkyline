@@ -2,9 +2,8 @@
 
 
 #include "FSKeySettingEntry.h"
-#include "FSkyline.h"
-#include "FSInput.h"
-#include "util/Logging.h"
+#include "FactorySkyline/FSkyline.h"
+#include "FactorySkyline/FSInput.h"
 
 
 UFSKeySettingEntry::UFSKeySettingEntry(const FObjectInitializer& ObjectInitializer)

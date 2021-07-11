@@ -1,11 +1,11 @@
 // ILikeBanas
 
 
-#include "UI/FSSelectPanel.h"
-#include "UI/FSFoldWidgetBase.h"
-#include "FSkyline.h"
-#include "FSController.h"
-#include "FSDesign.h"
+#include "FactorySkyline/UI/FSSelectPanel.h"
+#include "FactorySkyline/UI/FSFoldWidgetBase.h"
+#include "FactorySkyline/FSkyline.h"
+#include "FactorySkyline/FSController.h"
+#include "FactorySkyline/FSDesign.h"
 #include "Components/CheckBox.h"
 #include "Components/VerticalBox.h"
 #include "Components/VerticalBoxSlot.h"

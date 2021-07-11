@@ -3,8 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UI/FSMenuWidget.h"
-#include "UI/FSButtonWidget.h"
+#include "FactorySkyline/UI/FSMenuWidget.h"
+#include "FactorySkyline/UI/FSButtonWidget.h"
 #include "FSListMenuWidget.generated.h"
 
 /**

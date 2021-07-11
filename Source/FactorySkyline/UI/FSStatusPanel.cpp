@@ -2,7 +2,7 @@
 
 
 #include "FSStatusPanel.h"
-#include "FSkyline.h"
+#include "FactorySkyline/FSkyline.h"
 
 void UFSStatusPanel::onCheckBoxChanged(bool IsChecked)
 {
@@ -51,7 +51,7 @@ void UFSStatusPanel::Load(UFSDesign* Design)
 	for (FSEntry& Entry : EntryList) {
 		UTexture2D* Texture = UFGItemDescriptor::GetSmallIcon(UFGRecipe::GetDescriptorForRecipe(AFSkyline::Get(this)->SplineHologramFactory->GetRecipeFromClass(Entry.BuildableClass)));
 		if (Texture) {
-			TSubclassOf<UUserWidget> WidgetClass = LoadClass<UUserWidget>(this, TEXT("/Game/FactorySkyline/Widget_StatusEntry.Widget_StatusEntry_C"));
+			TSubclassOf<UUserWidget> WidgetClass = LoadClass<UUserWidget>(this, TEXT("/FactorySkyline/Widget_StatusEntry.Widget_StatusEntry_C"));
 			UFSStatusEntry* Widget = CreateWidget<UFSStatusEntry>(this, WidgetClass);
 			Widget->Init(Design, Entry.BuildableClass, Entry.Count, Texture);
 			Widget->SkylineUI = FSkyline->SkylineUI;

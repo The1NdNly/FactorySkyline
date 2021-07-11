@@ -1,8 +1,8 @@
 // ILikeBanas
 
 
-#include "UI/FSCopyPanel.h"
-#include "FSkyline.h"
+#include "FactorySkyline/UI/FSCopyPanel.h"
+#include "FactorySkyline/FSkyline.h"
 
 
 UFSCopyPanel::UFSCopyPanel(const FObjectInitializer& ObjectInitializer)

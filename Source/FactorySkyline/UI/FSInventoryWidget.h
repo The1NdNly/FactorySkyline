@@ -8,8 +8,8 @@
 #include "Components/CanvasPanelSlot.h"
 #include "Components/Button.h"
 #include "Components/VerticalBox.h"
-#include "FSInventory.h"
-#include "UI/FSInventoryEntry.h"
+#include "FactorySkyline/FSInventory.h"
+#include "FactorySkyline/UI/FSInventoryEntry.h"
 #include "FSInventoryWidget.generated.h"
 
 /**

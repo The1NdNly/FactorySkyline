@@ -1,10 +1,9 @@
 // ILikeBanas
 
 
-#include "UI/FSButtonWidget.h"
-#include "UI/FSkylineUI.h"
-#include "FSMenuItem.h"
-#include "util/Logging.h"
+#include "FactorySkyline/UI/FSButtonWidget.h"
+#include "FactorySkyline/UI/FSkylineUI.h"
+#include "FactorySkyline/FSMenuItem.h"
 
 
 UFSButtonWidget::UFSButtonWidget(const FObjectInitializer& ObjectInitializer)

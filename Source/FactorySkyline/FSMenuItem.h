@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "List.h"
+#include "Containers/List.h"
 #include "UI/FSMenuWidget.h"
 #include "UI/FSMenuEntryBase.h"
 #include "UI/FSButtonWidget.h"
@@ -151,7 +151,7 @@ public:
 
 	bool Folded = false;
 
-	virtual void LoadInit(UObject* SkylineUI, UFSDesignMenu* Parent);
+	virtual void LoadInit(UObject* SkylineUIParam, UFSDesignMenu* Parent);
 	
 	virtual UFSMenuEntryBase* AccquireEntry();
 	virtual UFSMenuWidget* AccquireMenuWidget();

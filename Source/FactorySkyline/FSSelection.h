@@ -28,6 +28,8 @@ struct FSActorMaterial
 
 struct FSMaterialHandle
 {
+	//UMaterialInterface* Material;
+	TArray<class UMaterialInterface*> Materials;
 	UMaterialInterface* Material;
 	int32 Handle;
 };
@@ -57,7 +59,7 @@ public:
 	bool RectSelectUpdate(FVector2D Cursor);
 	void RectSelectExit(bool Valid);
 
-	void Load(UFSDesign* Design);
+	void Load(UFSDesign* DesignParam);
 	void LoadSelect(UFSDesign* Design);
 	void LoadSetAnchor(UFSDesign* Design);
 	static void SetAutoRebuildTreeAll(bool Auto);
@@ -72,12 +74,16 @@ public:
 	void EnableHightLightFocus(AFGBuildable* Buildable);
 	void DisableHightLightFocus();
 	void DisableAll();
-
+	
 	FSISMNode* GetISM(UFGColoredInstanceMeshProxy* MeshProxy, UMaterialInterface* Material);
 	void AddInstance(UFGColoredInstanceMeshProxy* MeshProxy, UMaterialInterface* Material);
 	void RemoveInstance(UFGColoredInstanceMeshProxy* MeshProxy, FSMaterialHandle* Node);
 	void AddInstance(UFGColoredInstanceMeshProxy* MeshProxy, uint8 Slot);
 	void RemoveInstance(UFGColoredInstanceMeshProxy* MeshProxy, uint8 Slot);
+
+	void SetMeshInstanced(UMeshComponent* MeshComp, bool Instanced) const;
+
+	void InitMaterials();
 
 	UFSDesign* Design;
 	UFSConnectSelectService* ConnectSelectService = nullptr;
@@ -95,7 +101,8 @@ public:
 	UPROPERTY()
 	TArray<UInstancedStaticMeshComponent*> GCFlag;
 	TMap<TPair<UFGColoredInstanceManager*, UMaterialInterface* >, FSISMNode*> ISMMapping;
-	TMap<UFGColoredInstanceMeshProxy*, FSMaterialHandle* > MaterialMapping;
+	//TMap<UMeshComponent*, FSMaterialHandle > MaterialMapping;
+	TMap<UMeshComponent*, FSMaterialHandle* > MaterialMapping;
 
 	UPROPERTY()
 	TSet<UMaterialInstanceDynamic*> DynamicInstanceSet;
@@ -108,4 +115,7 @@ public:
 
 	UPROPERTY()
 	UTexture* Scanline;
+
+	UPROPERTY()
+	bool MaterialisInitialized;
 };

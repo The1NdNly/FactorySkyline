@@ -6,10 +6,10 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/CanvasPanel.h"
 #include "Components/CanvasPanelSlot.h"
-#include "Geometry.h"
-#include "UI/FSButtonWidget.h"
-#include "FSMenuItem.h"
-#include "FSBuildableService.h"
+#include "Layout/Geometry.h"
+#include "FactorySkyline/UI/FSButtonWidget.h"
+#include "FactorySkyline/FSMenuItem.h"
+#include "FactorySkyline/FSBuildableService.h"
 #include "FSLogoWidget.generated.h"
 
 /**

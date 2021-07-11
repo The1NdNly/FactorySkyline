@@ -4,8 +4,7 @@
 #include "FSSelectService.h"
 #include "FSkyline.h"
 #include "FGRecipeManager.h"
-#include "FGBuildingDescriptor.h"
-#include "util/Logging.h"
+#include "Resources/FGBuildingDescriptor.h"
 
 
 void UFSConnectSelectService::Init()
@@ -89,8 +88,10 @@ void UFSConnectSelectService::TerminalCurrentTask()
 
 void UFSConnectSelectService::BeginDestroy()
 {
-	if (ConnectSelectAsyncTask.GetTask().IsInited) {
-		ConnectSelectAsyncTask.GetTask().ShutDown();
+	
+	if (!ConnectSelectAsyncTask.IsWorkDone()) {
+		ConnectSelectAsyncTask.Cancel();
+		ConnectSelectAsyncTask.WaitCompletionWithTimeout(5000);
 		ConnectSelectAsyncTask.EnsureCompletion(false);
 	}
 
